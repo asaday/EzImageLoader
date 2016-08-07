@@ -3,7 +3,7 @@
 // The MIT License (MIT)
 
 import UIKit
-import CommonCrypto
+//import CommonCrypto
 
 struct Dispatch {
 	private let block: dispatch_block_t

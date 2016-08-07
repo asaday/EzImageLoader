@@ -1,8 +1,11 @@
-framework module EzHTTP {
-  umbrella header "EzHTTP.h"
 
-  export *
-  module * { export * }
+framework module EzHTTP {
+    header "EzHTTP.h"
+    export *
+
+    module GCDAsyncSocket {
+        header "GCDAsyncSocket.h"
+    }
 }
 
 module EzHTTP.Swift {

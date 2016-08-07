@@ -4,7 +4,7 @@
 
 import UIKit
 import ImageIO
-import webp
+//import webp
 
 public extension UIImage {
 

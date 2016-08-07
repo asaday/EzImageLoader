@@ -1,0 +1,14 @@
+
+framework module EzImageLoader {
+    header "EzImageLoader.h"
+    export *
+    
+    module webp {
+        header "webp.h"
+    }
+
+    module CommonCrypto {
+        header "CommonCrypto_re.h"
+        link "CommonCrypto"
+    }
+}

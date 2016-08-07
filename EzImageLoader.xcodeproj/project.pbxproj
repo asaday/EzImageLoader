@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C3792EE61D4D190F00B08DEA /* EzImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = C3792ED61D4D190F00B08DEA /* EzImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C35DDEF61D578B9D003932EE /* EzImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = C35DDEF51D578B9D003932EE /* EzImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C3792EEB1D4D190F00B08DEA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3792EDC1D4D190F00B08DEA /* ImageLoader.swift */; };
 		C3792EEC1D4D190F00B08DEA /* misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3792EDD1D4D190F00B08DEA /* misc.swift */; };
 		C3792EF11D4D190F00B08DEA /* UIImage+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3792EE21D4D190F00B08DEA /* UIImage+ext.swift */; };
 		C3792EF21D4D190F00B08DEA /* UIImageView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3792EE31D4D190F00B08DEA /* UIImageView+ext.swift */; };
-		C3792EF31D4D190F00B08DEA /* webp.h in Headers */ = {isa = PBXBuildFile; fileRef = C3792EE41D4D190F00B08DEA /* webp.h */; };
+		C3792EF31D4D190F00B08DEA /* webp.h in Headers */ = {isa = PBXBuildFile; fileRef = C3792EE41D4D190F00B08DEA /* webp.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C3792EF41D4D190F00B08DEA /* webp.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792EE51D4D190F00B08DEA /* webp.m */; };
 		C3792EF71D4D191B00B08DEA /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3792EF61D4D191B00B08DEA /* WebP.framework */; };
-		C3792EFC1D4D19E400B08DEA /* CommonCrypto_re.h in Headers */ = {isa = PBXBuildFile; fileRef = C3792EF91D4D19E400B08DEA /* CommonCrypto_re.h */; };
+		C3A9DDD81D578E70005DFAE8 /* CommonCrypto_re.h in Headers */ = {isa = PBXBuildFile; fileRef = C3A9DDD71D578E70005DFAE8 /* CommonCrypto_re.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C35DDEF51D578B9D003932EE /* EzImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EzImageLoader.h; sourceTree = "<group>"; };
 		C3792ECA1D4D18C200B08DEA /* EzImageLoader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EzImageLoader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C3792ED61D4D190F00B08DEA /* EzImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EzImageLoader.h; sourceTree = "<group>"; };
 		C3792ED71D4D190F00B08DEA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3792EDC1D4D190F00B08DEA /* ImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		C3792EDD1D4D190F00B08DEA /* misc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = misc.swift; sourceTree = "<group>"; };
@@ -29,8 +29,8 @@
 		C3792EE41D4D190F00B08DEA /* webp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webp.h; sourceTree = "<group>"; };
 		C3792EE51D4D190F00B08DEA /* webp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = webp.m; sourceTree = "<group>"; };
 		C3792EF61D4D191B00B08DEA /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
-		C3792EF91D4D19E400B08DEA /* CommonCrypto_re.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCrypto_re.h; sourceTree = "<group>"; };
-		C3792EFB1D4D19E400B08DEA /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		C3A9DDD71D578E70005DFAE8 /* CommonCrypto_re.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCrypto_re.h; sourceTree = "<group>"; };
+		C3A9DDDA1D578F53005DFAE8 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +48,6 @@
 		C3792EC01D4D18C200B08DEA = {
 			isa = PBXGroup;
 			children = (
-				C3792EF81D4D19E400B08DEA /* modules */,
 				C3792EF51D4D191B00B08DEA /* frameworks */,
 				C3792ED51D4D190F00B08DEA /* resources */,
 				C3792ED81D4D190F00B08DEA /* sources */,
@@ -67,7 +66,7 @@
 		C3792ED51D4D190F00B08DEA /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				C3792ED61D4D190F00B08DEA /* EzImageLoader.h */,
+				C3A9DDDA1D578F53005DFAE8 /* module.modulemap */,
 				C3792ED71D4D190F00B08DEA /* Info.plist */,
 			);
 			path = resources;
@@ -76,6 +75,8 @@
 		C3792ED81D4D190F00B08DEA /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				C3A9DDD71D578E70005DFAE8 /* CommonCrypto_re.h */,
+				C35DDEF51D578B9D003932EE /* EzImageLoader.h */,
 				C3792EDC1D4D190F00B08DEA /* ImageLoader.swift */,
 				C3792EDD1D4D190F00B08DEA /* misc.swift */,
 				C3792EE21D4D190F00B08DEA /* UIImage+ext.swift */,
@@ -94,15 +95,6 @@
 			path = frameworks;
 			sourceTree = "<group>";
 		};
-		C3792EF81D4D19E400B08DEA /* modules */ = {
-			isa = PBXGroup;
-			children = (
-				C3792EF91D4D19E400B08DEA /* CommonCrypto_re.h */,
-				C3792EFB1D4D19E400B08DEA /* module.modulemap */,
-			);
-			path = modules;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -110,8 +102,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3792EE61D4D190F00B08DEA /* EzImageLoader.h in Headers */,
-				C3792EFC1D4D19E400B08DEA /* CommonCrypto_re.h in Headers */,
+				C35DDEF61D578B9D003932EE /* EzImageLoader.h in Headers */,
+				C3A9DDD81D578E70005DFAE8 /* CommonCrypto_re.h in Headers */,
 				C3792EF31D4D190F00B08DEA /* webp.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,14 +288,15 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
 					"$(PROJECT_DIR)/sample",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = resources/module.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = modules;
 			};
 			name = Debug;
 		};
@@ -318,14 +311,15 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
 					"$(PROJECT_DIR)/sample",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = resources/module.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = modules;
 			};
 			name = Release;
 		};

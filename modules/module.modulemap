@@ -1,9 +1,0 @@
-
-module CommonCrypto [system] {
-	header "CommonCrypto_re.h"
-    export *
-}
-
-module webp {
-	header "../sources/webp.h"
-}
