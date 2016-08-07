@@ -1,0 +1,10 @@
+framework module EzHTTP {
+  umbrella header "EzHTTP.h"
+
+  export *
+  module * { export * }
+}
+
+module EzHTTP.Swift {
+    header "EzHTTP-Swift.h"
+}
