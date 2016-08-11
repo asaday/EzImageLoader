@@ -7,7 +7,7 @@ import EzHTTP
 
 public class ImageLoader: NSObject {
 
-	public static let sharedInstance = ImageLoader()
+	public static let shared = ImageLoader()
 
 	public let cache: NSCache = NNCache()
 	public let queue = NSOperationQueue() // for decode task
@@ -104,17 +104,17 @@ public extension ImageLoader {
 
 	// MARK:  normal get
 	static func request(request: NSURLRequest, filter: Filter? = nil, completion: ResultHandler) -> Task? {
-		return sharedInstance.request(request, filter: filter, completion: completion)
+		return shared.request(request, filter: filter, completion: completion)
 	}
 
 	static func get(urls: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: ResultHandler) -> Task? {
-		guard let req = HTTP.sharedInstance.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
+		guard let req = HTTP.shared.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
 		return request(req, filter: filter, completion: completion)
 	}
 
 	// MARK:  sized get
 	static func request(request: NSURLRequest, size: CGSize, completion: ResultHandler) -> Task? {
-		return sharedInstance.request(request, filter: Filter.resizer(size), completion: completion)
+		return shared.request(request, filter: Filter.resizer(size), completion: completion)
 	}
 
 	static func get(urls: String, size: CGSize, headers: [String: String]? = nil, completion: ResultHandler) -> Task? {
@@ -127,18 +127,18 @@ public extension ImageLoader {
 		var r: UIImage? = nil
 		var done = false
 
-		sharedInstance.request(request, filter: nil) { r = $0.image; done = true }
+		shared.request(request, filter: nil) { r = $0.image; done = true }
 		while done == false { CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.02, false) }
 		return r
 	}
 
 	static func getASync(urls: String, headers: [String: String]? = nil) -> UIImage? {
-		guard let req = HTTP.sharedInstance.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
+		guard let req = HTTP.shared.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
 		return requestASync(req)
 	}
 
 	static func reset() {
-		ImageLoader.sharedInstance.reset()
+		ImageLoader.shared.reset()
 	}
 }
 
