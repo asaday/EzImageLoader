@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C33140FE1D4D1B94005D8E0C /* EzImageLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C33140FD1D4D1B69005D8E0C /* EzImageLoader.framework */; };
-		C35DDEE31D5783C2003932EE /* EzHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C35DDEDE1D578308003932EE /* EzHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C36D95621D4069FD00F0CE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D95611D4069FD00F0CE31 /* AppDelegate.swift */; };
 		C36D95641D4069FD00F0CE31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D95631D4069FD00F0CE31 /* ViewController.swift */; };
 		C36D95671D4069FD00F0CE31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36D95651D4069FD00F0CE31 /* Main.storyboard */; };
 		C36D95691D4069FD00F0CE31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C36D95681D4069FD00F0CE31 /* Assets.xcassets */; };
 		C36D956C1D4069FD00F0CE31 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36D956A1D4069FD00F0CE31 /* LaunchScreen.storyboard */; };
+		C3A9DDE81D5C99C8005DFAE8 /* EzImageLoader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C33140FD1D4D1B69005D8E0C /* EzImageLoader.framework */; };
+		C3A9DDE91D5C99C8005DFAE8 /* EzImageLoader.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C33140FD1D4D1B69005D8E0C /* EzImageLoader.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C3A9DDEE1D5C99FA005DFAE8 /* EzHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A9DDED1D5C99FA005DFAE8 /* EzHTTP.framework */; };
+		C3A9DDEF1D5C99FF005DFAE8 /* EzHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A9DDED1D5C99FA005DFAE8 /* EzHTTP.framework */; };
+		C3A9DDF01D5C99FF005DFAE8 /* EzHTTP.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C3A9DDED1D5C99FA005DFAE8 /* EzHTTP.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,16 +27,24 @@
 			remoteGlobalIDString = C3792ECA1D4D18C200B08DEA;
 			remoteInfo = EzImageLoader;
 		};
+		C3A9DDEA1D5C99C8005DFAE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C33140F81D4D1B69005D8E0C /* EzImageLoader.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C3792EC91D4D18C200B08DEA;
+			remoteInfo = EzImageLoader;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C33141071D4D1C98005D8E0C /* Embed Frameworks */ = {
+		C3A9DDEC1D5C99C8005DFAE8 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C35DDEE31D5783C2003932EE /* EzHTTP.framework in Embed Frameworks */,
+				C3A9DDE91D5C99C8005DFAE8 /* EzImageLoader.framework in Embed Frameworks */,
+				C3A9DDF01D5C99FF005DFAE8 /* EzHTTP.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,7 +53,6 @@
 
 /* Begin PBXFileReference section */
 		C33140F81D4D1B69005D8E0C /* EzImageLoader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EzImageLoader.xcodeproj; path = ../EzImageLoader.xcodeproj; sourceTree = "<group>"; };
-		C35DDEDE1D578308003932EE /* EzHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EzHTTP.framework; sourceTree = "<group>"; };
 		C36D955E1D4069FD00F0CE31 /* EzImageLoaderSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EzImageLoaderSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36D95611D4069FD00F0CE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C36D95631D4069FD00F0CE31 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -50,6 +60,7 @@
 		C36D95681D4069FD00F0CE31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C36D956B1D4069FD00F0CE31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C36D956D1D4069FD00F0CE31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3A9DDED1D5C99FA005DFAE8 /* EzHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EzHTTP.framework; path = Carthage/Build/iOS/EzHTTP.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +68,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C33140FE1D4D1B94005D8E0C /* EzImageLoader.framework in Frameworks */,
+				C3A9DDEF1D5C99FF005DFAE8 /* EzHTTP.framework in Frameworks */,
+				C3A9DDE81D5C99C8005DFAE8 /* EzImageLoader.framework in Frameworks */,
+				C3A9DDEE1D5C99FA005DFAE8 /* EzHTTP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +88,7 @@
 		C36D95551D4069FD00F0CE31 = {
 			isa = PBXGroup;
 			children = (
-				C35DDEDE1D578308003932EE /* EzHTTP.framework */,
+				C3A9DDED1D5C99FA005DFAE8 /* EzHTTP.framework */,
 				C33140F81D4D1B69005D8E0C /* EzImageLoader.xcodeproj */,
 				C36D95601D4069FD00F0CE31 /* sample */,
 				C36D955F1D4069FD00F0CE31 /* Products */,
@@ -113,11 +126,12 @@
 				C36D955A1D4069FD00F0CE31 /* Sources */,
 				C36D955B1D4069FD00F0CE31 /* Frameworks */,
 				C36D955C1D4069FD00F0CE31 /* Resources */,
-				C33141071D4D1C98005D8E0C /* Embed Frameworks */,
+				C3A9DDEC1D5C99C8005DFAE8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C3A9DDEB1D5C99C8005DFAE8 /* PBXTargetDependency */,
 			);
 			name = EzImageLoaderSample;
 			productName = sample;
@@ -197,6 +211,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C3A9DDEB1D5C99C8005DFAE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = EzImageLoader;
+			targetProxy = C3A9DDEA1D5C99C8005DFAE8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C36D95651D4069FD00F0CE31 /* Main.storyboard */ = {
@@ -307,9 +329,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = sample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -323,9 +347,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = sample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

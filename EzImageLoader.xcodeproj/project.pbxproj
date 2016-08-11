@@ -16,6 +16,7 @@
 		C3792EF41D4D190F00B08DEA /* webp.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792EE51D4D190F00B08DEA /* webp.m */; };
 		C3792EF71D4D191B00B08DEA /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3792EF61D4D191B00B08DEA /* WebP.framework */; };
 		C3A9DDD81D578E70005DFAE8 /* CommonCrypto_re.h in Headers */ = {isa = PBXBuildFile; fileRef = C3A9DDD71D578E70005DFAE8 /* CommonCrypto_re.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		C3A9DDE31D5C9972005DFAE8 /* EzHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A9DDE21D5C9972005DFAE8 /* EzHTTP.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		C3792EF61D4D191B00B08DEA /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
 		C3A9DDD71D578E70005DFAE8 /* CommonCrypto_re.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCrypto_re.h; sourceTree = "<group>"; };
 		C3A9DDDA1D578F53005DFAE8 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		C3A9DDE21D5C9972005DFAE8 /* EzHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EzHTTP.framework; path = sample/Carthage/Build/iOS/EzHTTP.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3792EF71D4D191B00B08DEA /* WebP.framework in Frameworks */,
+				C3A9DDE31D5C9972005DFAE8 /* EzHTTP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +51,7 @@
 		C3792EC01D4D18C200B08DEA = {
 			isa = PBXGroup;
 			children = (
+				C3A9DDE21D5C9972005DFAE8 /* EzHTTP.framework */,
 				C3792EF51D4D191B00B08DEA /* frameworks */,
 				C3792ED51D4D190F00B08DEA /* resources */,
 				C3792ED81D4D190F00B08DEA /* sources */,
@@ -289,6 +293,7 @@
 					"$(PROJECT_DIR)/frameworks",
 					"$(PROJECT_DIR)/sample",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/sample/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -312,6 +317,7 @@
 					"$(PROJECT_DIR)/frameworks",
 					"$(PROJECT_DIR)/sample",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/sample/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
