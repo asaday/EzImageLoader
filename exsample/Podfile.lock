@@ -1,0 +1,27 @@
+PODS:
+  - EzHTTP (0.0.6)
+  - EzImageLoader (0.0.3):
+    - EzHTTP
+
+DEPENDENCIES:
+  - EzHTTP (from `https://github.com/asaday/EzHTTP`)
+  - EzImageLoader (from `../`)
+
+EXTERNAL SOURCES:
+  EzHTTP:
+    :git: https://github.com/asaday/EzHTTP
+  EzImageLoader:
+    :path: ../
+
+CHECKOUT OPTIONS:
+  EzHTTP:
+    :commit: bbeb70fcc3392cd5f6488964b71dab388f804b06
+    :git: https://github.com/asaday/EzHTTP
+
+SPEC CHECKSUMS:
+  EzHTTP: d1541e33fa9e96b1c55bee7d058165eba68097ca
+  EzImageLoader: 179bc8631099fcc9d818f3d841ab4d67859a4ce8
+
+PODFILE CHECKSUM: 054e9b21e7900a281d40bb82766b70e0125b4863
+
+COCOAPODS: 1.0.1

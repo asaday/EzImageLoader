@@ -1,0 +1,11 @@
+
+platform :ios, '8.0'
+use_frameworks!
+
+target 'EzImageLoaderSample' do
+
+	pod 'EzHTTP', :git => 'https://github.com/asaday/EzHTTP'
+	pod 'EzImageLoader' ,:path => '../'
+ 
+end
+

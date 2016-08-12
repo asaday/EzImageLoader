@@ -179,7 +179,7 @@ public extension ImageLoader {
 	public struct Filter {
 		public let identifier: String // for chache identifier
 		public var param: [String: AnyObject] = [:]
-		public var dateConverter: ((data: NSData, param: [String: AnyObject]) -> NSData?)? = nil
+		public var dataConverter: ((data: NSData, param: [String: AnyObject]) -> NSData?)? = nil
 		public var imageConverter: ((image: UIImage, param: [String: AnyObject]) -> UIImage?)? = nil
 
 		public init(identifier: String) {
@@ -362,7 +362,7 @@ public extension ImageLoader {
 			guard var data = data else { return nil }
 			let startTime = NSDate()
 
-			if let dhandler = filter?.dateConverter, param = filter?.param {
+			if let dhandler = filter?.dataConverter, param = filter?.param {
 				guard let da = dhandler(data: data, param: param) else { return nil }
 				data = da
 			}
