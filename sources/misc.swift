@@ -6,25 +6,24 @@ import UIKit
 //import CommonCrypto
 
 struct Dispatch {
-	private let block: dispatch_block_t
 
 	// independent
-	static func main(block: dispatch_block_t) {
-		return dispatch_async(dispatch_get_main_queue(), block)
+	static func main(_ block: @escaping () -> ()) {
+		return DispatchQueue.main.async(execute: block)
 	}
 
-	static func background(block: dispatch_block_t) {
-		return dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), block)
+	static func background(_ block: @escaping () -> ()) {
+		return DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async(execute: block)
 	}
 
 	// can select main or default
-	static func doAsMain(isMain: Bool, block: dispatch_block_t) {
-		let queue: dispatch_queue_t = isMain ? dispatch_get_main_queue() : dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)
-		dispatch_sync(queue, block)
+	static func doAsMain(_ isMain: Bool, block: () -> ()) {
+		let queue: DispatchQueue = isMain ? DispatchQueue.main : DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
+		queue.sync(execute: block)
 	}
 
 	// use in main-thread, call this or ...ASync in async{}
-	static func await<T>(block: () -> T?) -> T? {
+	static func await<T>(_ block: @escaping () -> T?) -> T? {
 		var result: T?
 		var done = false
 
@@ -33,12 +32,12 @@ struct Dispatch {
 			done = true
 		}
 
-		while done == false { CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.02, false) }
+		while done == false { CFRunLoopRunInMode(CFRunLoopMode.defaultMode, 0.02, false) }
 		return result
 	}
 
-	static func async(block: () -> Void) {
-		CFRunLoopPerformBlock(CFRunLoopGetCurrent(), kCFRunLoopCommonModes, block)
+	static func async(_ block: @escaping () -> Void) {
+		CFRunLoopPerformBlock(CFRunLoopGetCurrent(), CFRunLoopMode.commonModes as CFTypeRef!, block)
 	}
 
 }
@@ -46,26 +45,26 @@ struct Dispatch {
 extension String {
 	func to_ns() -> NSString { return (self as NSString) }
 
-	func hasString(str: String) -> Bool {
-		if let _ = rangeOfString(str) { return true }
+	func hasString(_ str: String) -> Bool {
+		if let _ = range(of: str) { return true }
 		return false
 	}
 
-	func appendPath(path: String) -> String {
-		let result = to_ns().stringByAppendingPathComponent(path)
+	func appendPath(_ path: String) -> String {
+		let result = to_ns().appendingPathComponent(path)
 
 		if !self.hasString("://") { return result }
-		guard let c = NSURLComponents(string: self) else { return result }
+		guard var c = URLComponents(string: self) else { return result }
 
 		if c.path == nil { c.path = "/" }
-		c.path = c.path?.to_ns().stringByAppendingPathComponent(path)
+		c.path = c.path.to_ns().appendingPathComponent(path)
 		return c.string ?? result
 	}
 
 	var md5: String {
-		guard let data = dataUsingEncoding(NSUTF8StringEncoding) else { return "" }
-		var hash = [UInt8](count: Int(CC_MD5_DIGEST_LENGTH), repeatedValue: 0)
-		CC_MD5(data.bytes, CC_LONG(data.length), &hash)
+		guard let data = data(using: String.Encoding.utf8) else { return "" }
+		var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+		CC_MD5((data as NSData).bytes, CC_LONG(data.count), &hash)
 		return hash.reduce("") { $0 + String(format: "%02X", $1) }
 
 	}
@@ -74,83 +73,83 @@ extension String {
 extension NSObject {
 
 	func removeNotifications() {
-		NSObject.cancelPreviousPerformRequestsWithTarget(self)
-		NSNotificationCenter.defaultCenter().removeObserver(self)
+		NSObject.cancelPreviousPerformRequests(withTarget: self)
+		NotificationCenter.default.removeObserver(self)
 	}
 
-	func addNotification(aSelector: Selector, name aName: String) {
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: aSelector, name: aName, object: nil)
+	func addNotification(_ aSelector: Selector, name aName: String) {
+		NotificationCenter.default.addObserver(self, selector: aSelector, name: NSNotification.Name(rawValue: aName), object: nil)
 	}
 
 	// black magic
-	private struct AssociatedKeys { static var name = "name" }
+	fileprivate struct AssociatedKeys { static var name = "name" }
 
-	func getAssociate(key: String) -> AnyObject? {
+	func getAssociate(_ key: String) -> AnyObject? {
 		guard let dic = objc_getAssociatedObject(self, &AssociatedKeys.name) as? [String: AnyObject] else { return nil }
 		return dic[key]
 	}
 
-	func setAssociate(key: String, value: AnyObject?) {
+	func setAssociate(_ key: String, value: AnyObject?) {
 		var dic = (objc_getAssociatedObject(self, &AssociatedKeys.name) as? [String: AnyObject]) ?? [:]
 		dic[key] = value
 		objc_setAssociatedObject(self, &AssociatedKeys.name, dic, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 	}
 }
 
-extension NSDate {
+extension Date {
 
-	var lapTime: NSTimeInterval { return -timeIntervalSinceDate(NSDate()) }
+	var lapTime: TimeInterval { return -timeIntervalSince(Date()) }
 }
 
 struct Path {
-	static var documtnts: String { return NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] }
-	static var caches: String { return NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)[0] }
-	static var library: String { return NSSearchPathForDirectoriesInDomains(.LibraryDirectory, .UserDomainMask, true)[0] }
-	static var support: String { return NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)[0] }
+	static var documtnts: String { return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] }
+	static var caches: String { return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] }
+	static var library: String { return NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] }
+	static var support: String { return NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)[0] }
 	static var temp: String { return NSTemporaryDirectory() }
-	static var resource: String { return NSBundle.mainBundle().resourcePath ?? "" }
+	static var resource: String { return Bundle.main.resourcePath ?? "" }
 
-	static func documtnts(path: String) -> String { return Path.documtnts.appendPath(path) }
-	static func caches(path: String) -> String { return Path.caches.appendPath(path) }
-	static func library(path: String) -> String { return Path.library.appendPath(path) }
-	static func support(path: String) -> String { return Path.support.appendPath(path) }
-	static func resource(path: String) -> String { return Path.resource.appendPath(path) }
+	static func documtnts(_ path: String) -> String { return Path.documtnts.appendPath(path) }
+	static func caches(_ path: String) -> String { return Path.caches.appendPath(path) }
+	static func library(_ path: String) -> String { return Path.library.appendPath(path) }
+	static func support(_ path: String) -> String { return Path.support.appendPath(path) }
+	static func resource(_ path: String) -> String { return Path.resource.appendPath(path) }
 
-	static func remove(path: String) -> Bool {
+	static func remove(_ path: String) -> Bool {
 		do {
-			try NSFileManager.defaultManager().removeItemAtPath(path)
+			try FileManager.default.removeItem(atPath: path)
 		} catch { return false }
 		return true
 	}
 
-	static func mkdir(path: String) -> Bool {
+	static func mkdir(_ path: String) -> Bool {
 		do {
-			try NSFileManager.defaultManager().createDirectoryAtPath(path, withIntermediateDirectories: true, attributes: nil)
+			try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
 		} catch { return false }
 		return true
 	}
 
-	static func files(path: String) -> [String] {
-		return (try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(path)) ?? []
+	static func files(_ path: String) -> [String] {
+		return (try? FileManager.default.contentsOfDirectory(atPath: path)) ?? []
 	}
 
-	static func exists(path: String) -> Bool {
-		return NSFileManager.defaultManager().fileExistsAtPath(path)
+	static func exists(_ path: String) -> Bool {
+		return FileManager.default.fileExists(atPath: path)
 	}
 
-	static func isFile(path: String) -> Bool {
+	static func isFile(_ path: String) -> Bool {
 		var isdir: ObjCBool = false
-		let exist = NSFileManager.defaultManager().fileExistsAtPath(path, isDirectory: &isdir)
-		return exist && !isdir
+		let exist = FileManager.default.fileExists(atPath: path, isDirectory: &isdir)
+		return exist && !isdir.boolValue
 	}
 
-	static func isDir(path: String) -> Bool {
+	static func isDir(_ path: String) -> Bool {
 		var isdir: ObjCBool = false
-		let exist = NSFileManager.defaultManager().fileExistsAtPath(path, isDirectory: &isdir)
-		return exist && isdir
+		let exist = FileManager.default.fileExists(atPath: path, isDirectory: &isdir)
+		return exist && isdir.boolValue
 	}
 
-	static func attributes(path: String) -> [String: AnyObject] {
-		return (try? NSFileManager.defaultManager().attributesOfItemAtPath(path)) ?? [:]
+	static func attributes(_ path: String) -> [FileAttributeKey: Any] {
+		return (try? FileManager.default.attributesOfItem(atPath: path)) ?? [:]
 	}
 }

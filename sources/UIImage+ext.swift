@@ -8,7 +8,7 @@ import ImageIO
 
 public extension UIImage {
 
-	public func resize(size: CGSize, fill: Bool = true) -> UIImage {
+	public func resize(_ size: CGSize, fill: Bool = true) -> UIImage {
 		if size.width <= 0 || size.height <= 0 || size.width <= 0 || size.height <= 0 { return self }
 
 		let xz = size.width / size.width
@@ -22,15 +22,15 @@ public extension UIImage {
 
 		UIGraphicsBeginImageContextWithOptions(size, false, 0)
 		let ctx = UIGraphicsGetCurrentContext()
-		CGContextTranslateCTM(ctx, 0, size.height)
-		CGContextScaleCTM(ctx, 1, -1)
-		CGContextDrawImage(ctx, rc, CGImage)
+		ctx?.translateBy(x: 0, y: size.height)
+		ctx?.scaleBy(x: 1, y: -1)
+		ctx?.draw(cgImage!, in: rc)
 		let ret = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		return ret
+		return ret!
 	}
 
-	public static func decode(data: NSData, memorized: Bool = true) -> UIImage? {
+	public static func decode(_ data: Data, memorized: Bool = true) -> UIImage? {
 		if isWebpFormat(data) {
 			return webpConv(data)
 		}
@@ -44,46 +44,46 @@ public extension UIImage {
 		if memorized == false { return image }
 
 		// extract
-		guard let imageRef: CGImageRef = image.CGImage else { return image }
-		let alpha: CGImageAlphaInfo = CGImageGetAlphaInfo(imageRef)
-		if alpha == .First || alpha == .Last || alpha == .PremultipliedFirst || alpha == .PremultipliedLast { return image }
+		guard let imageRef: CGImage = image.cgImage else { return image }
+		let alpha: CGImageAlphaInfo = imageRef.alphaInfo
+		if alpha == .first || alpha == .last || alpha == .premultipliedFirst || alpha == .premultipliedLast { return image }
 
 		UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
 		let ctx = UIGraphicsGetCurrentContext()
 
-		CGContextTranslateCTM(ctx, 0, image.size.height)
-		CGContextScaleCTM(ctx, 1, -1)
-		CGContextDrawImage(ctx, CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height), image.CGImage)
+		ctx?.translateBy(x: 0, y: image.size.height)
+		ctx?.scaleBy(x: 1, y: -1)
+		ctx?.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height) )
 		let ret = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return ret
 	}
 
-	static func isWebpFormat(data: NSData) -> Bool {
-		if data.length < 16 { return false }
+	static func isWebpFormat(_ data: Data) -> Bool {
+		if data.count < 16 { return false }
 		let riff: [UInt8] = [0x52, 0x49, 0x46, 0x46]
 		let webp: [UInt8] = [0x57, 0x45, 0x42, 0x50]
-		return (memcmp(data.bytes, riff, 4) == 0 && memcmp(data.bytes + 8, webp, 4) == 0)
+		return (memcmp((data as NSData).bytes, riff, 4) == 0 && memcmp((data as NSData).bytes + 8, webp, 4) == 0)
 	}
 
-	static func isGIFFormat(data: NSData) -> Bool {
-		if data.length < 4 { return false }
+	static func isGIFFormat(_ data: Data) -> Bool {
+		if data.count < 4 { return false }
 		let gif: [UInt8] = [0x47, 0x49, 0x46]
-		return (memcmp(data.bytes, gif, 3) == 0)
+		return (memcmp((data as NSData).bytes, gif, 3) == 0)
 	}
 
-	static func gifImage(data: NSData) -> UIImage? {
-		guard let imgSource = CGImageSourceCreateWithData(data as CFDataRef, nil) else { return nil }
+	static func gifImage(_ data: Data) -> UIImage? {
+		guard let imgSource = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
 		let count = CGImageSourceGetCount(imgSource)
 
 		var images: [UIImage] = []
 		for i in 0 ..< count {
-			if let ref: CGImageRef = CGImageSourceCreateImageAtIndex(imgSource, i, nil), img: UIImage = UIImage(CGImage: ref) {
+			if let ref: CGImage = CGImageSourceCreateImageAtIndex(imgSource, i, nil), let img: UIImage = UIImage(cgImage: ref) {
 				images.append(img)
 			}
 		}
 		if images.count == 0 { return nil }
 
-		return UIImage.animatedImageWithImages(images, duration: 0.5)
+		return UIImage.animatedImage(with: images, duration: 0.5)
 	}
 }

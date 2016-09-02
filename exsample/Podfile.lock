@@ -1,27 +1,28 @@
 PODS:
-  - EzHTTP (0.0.6)
-  - EzImageLoader (0.0.3):
+  - EzHTTP (0.0.7)
+  - EzImageLoader (0.0.4):
     - EzHTTP
 
 DEPENDENCIES:
-  - EzHTTP (from `https://github.com/asaday/EzHTTP`)
+  - EzHTTP (from `https://github.com/asaday/EzHTTP`, branch `swift3`)
   - EzImageLoader (from `../`)
 
 EXTERNAL SOURCES:
   EzHTTP:
+    :branch: swift3
     :git: https://github.com/asaday/EzHTTP
   EzImageLoader:
-    :path: ../
+    :path: "../"
 
 CHECKOUT OPTIONS:
   EzHTTP:
-    :commit: bbeb70fcc3392cd5f6488964b71dab388f804b06
+    :commit: a28abbccb9f3026695aadf9ec4a52b44d8e99a98
     :git: https://github.com/asaday/EzHTTP
 
 SPEC CHECKSUMS:
-  EzHTTP: d1541e33fa9e96b1c55bee7d058165eba68097ca
-  EzImageLoader: 179bc8631099fcc9d818f3d841ab4d67859a4ce8
+  EzHTTP: a8ef5552fa51b7348806ffa8ec606039d62ca8bd
+  EzImageLoader: fa03c2b202dd204147b482c3e99c2db3fb763dd4
 
-PODFILE CHECKSUM: 054e9b21e7900a281d40bb82766b70e0125b4863
+PODFILE CHECKSUM: 35e4280c5a0c990d95eb32bc47080493ec2c868a
 
 COCOAPODS: 1.0.1

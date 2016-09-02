@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
 		let v = UIImageView(frame: view.bounds)
 		view.addSubview(v)
-		v.contentMode = .ScaleAspectFit
+		v.contentMode = .scaleAspectFit
 		v.loadURL("https://httpbin.org/image/jpeg")
 	}
 

@@ -4,7 +4,7 @@ use_frameworks!
 
 target 'EzImageLoaderSample' do
 
-	pod 'EzHTTP', :git => 'https://github.com/asaday/EzHTTP'
+	pod 'EzHTTP', :git => 'https://github.com/asaday/EzHTTP', :branch=>'swift3'
 	pod 'EzImageLoader' ,:path => '../'
  
 end

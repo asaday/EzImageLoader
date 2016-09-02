@@ -5,21 +5,21 @@
 import UIKit
 import EzHTTP
 
-public class ImageLoader: NSObject {
+open class ImageLoader: NSObject {
 
-	public static let shared = ImageLoader()
+	open static let shared = ImageLoader()
 
-	public let cache: NSCache = NNCache()
-	public let queue = NSOperationQueue() // for decode task
-	public var cachePath: String = Path.caches("images")
+	open let cache: NSCache = NNCache()
+	open let queue = OperationQueue() // for decode task
+	open var cachePath: String = Path.caches("images")
 
-	public var fileCacheLifeTime: NSTimeInterval = 86400 * 3
-	public var disableMemoryCache: Bool = false
-	public var disableFileCache: Bool = false
-	public var debugWaitTime: NSTimeInterval = 0
+	open var fileCacheLifeTime: TimeInterval = 86400 * 3
+	open var disableMemoryCache: Bool = false
+	open var disableFileCache: Bool = false
+	open var debugWaitTime: TimeInterval = 0
 
-	public var dummyImage: UIImage?
-	public var dummyWait: NSTimeInterval = 0
+	open var dummyImage: UIImage?
+	open var dummyWait: TimeInterval = 0
 
 	deinit {
 		removeNotifications()
@@ -33,34 +33,34 @@ public class ImageLoader: NSObject {
 		cache.countLimit = 200
 
 		cleanCache()
-		addNotification(#selector(cleanCache), name: UIApplicationDidEnterBackgroundNotification)
+		addNotification(#selector(cleanCache), name: NSNotification.Name.UIApplicationDidEnterBackground.rawValue)
 	}
 
-	func request(request: NSURLRequest, filter: Filter?, completion: ResultHandler) -> Task? {
+	func request(_ request: URLRequest, filter: Filter?, completion: ResultHandler) -> Task? {
 
 		if let dmy = dummyImage {
-			completion(result: Result(image: dmy, reason: .MemoryCached))
+			completion(Result(image: dmy, reason: .memoryCached))
 			return nil
 		}
 
 		Bench.show += 1
 
-		let key = "\(request.URL?.absoluteString)_\( filter?.identifier ?? "")".md5
-		let path = cachePath.appendPath("\(request.URL?.absoluteString)".md5)
+		let key = "\(request.url?.absoluteString)_\( filter?.identifier ?? "")".md5
+		let path = cachePath.appendPath("\(request.url?.absoluteString)".md5)
 
 		if !disableMemoryCache {
-			if let img = cache.objectForKey(key) as? UIImage {
+			if let img = cache.object(forKey: key as AnyObject) as? UIImage {
 				Bench.memoryhit += 1
-				completion(result: Result(image: img, reason: .MemoryCached))
+				completion(Result(image: img, reason: .memoryCached))
 				return nil
 			}
 		}
 
-		let isMain = NSThread.isMainThread()
+		let isMain = Thread.isMainThread
 
 		let op = Task(queue: queue, request: request, path: path, filter: filter) { [weak self] result in
-			if let me = self, uimg = result.image { me.cache.setObject(uimg, forKey: key) }
-			Dispatch.doAsMain(isMain) { completion(result: result) }
+			if let me = self, let uimg = result.image { me.cache.setObject(uimg, forKey: key as AnyObject) }
+			Dispatch.doAsMain(isMain) { completion(result) }
 		}
 		op.disableFileCache = disableFileCache
 		op.debugWaitTime = debugWaitTime
@@ -73,7 +73,7 @@ public class ImageLoader: NSObject {
 
 	// called in applicationDidEnterBackground
 	func cleanCache() {
-		let now = NSDate()
+		let now = Date()
 
 		Path.mkdir(cachePath)
 		let files = Path.files(cachePath)
@@ -81,8 +81,9 @@ public class ImageLoader: NSObject {
 		for file in files {
 			let path = cachePath.appendPath(file)
 			let atb = Path.attributes(path)
-			if let dt = atb[NSFileCreationDate] as? NSDate {
-				if now.timeIntervalSinceDate(dt) > fileCacheLifeTime {
+
+			if let dt = atb[FileAttributeKey.creationDate] as? Date {
+				if now.timeIntervalSince(dt) > fileCacheLifeTime {
 					Path.remove(path)
 				}
 			}
@@ -103,38 +104,38 @@ public class ImageLoader: NSObject {
 public extension ImageLoader {
 
 	// MARK:  normal get
-	static func request(request: NSURLRequest, filter: Filter? = nil, completion: ResultHandler) -> Task? {
+	static func request(_ request: URLRequest, filter: Filter? = nil, completion: ResultHandler) -> Task? {
 		return shared.request(request, filter: filter, completion: completion)
 	}
 
-	static func get(urls: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: ResultHandler) -> Task? {
+	static func get(_ urls: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: ResultHandler) -> Task? {
 		guard let req = HTTP.shared.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
-		return request(req, filter: filter, completion: completion)
+		return request(req as URLRequest, filter: filter, completion: completion)
 	}
 
 	// MARK:  sized get
-	static func request(request: NSURLRequest, size: CGSize, completion: ResultHandler) -> Task? {
+	static func request(_ request: URLRequest, size: CGSize, completion: ResultHandler) -> Task? {
 		return shared.request(request, filter: Filter.resizer(size), completion: completion)
 	}
 
-	static func get(urls: String, size: CGSize, headers: [String: String]? = nil, completion: ResultHandler) -> Task? {
+	static func get(_ urls: String, size: CGSize, headers: [String: String]? = nil, completion: ResultHandler) -> Task? {
 		guard let req = HTTP.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
-		return request(req, size: size, completion: completion)
+		return request(req as URLRequest, size: size, completion: completion)
 	}
 
 	// MARK: async get (dont call in main task)
-	static func requestASync(request: NSURLRequest) -> UIImage? {
+	static func requestASync(_ request: URLRequest) -> UIImage? {
 		var r: UIImage? = nil
 		var done = false
 
 		shared.request(request, filter: nil) { r = $0.image; done = true }
-		while done == false { CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.02, false) }
+		while done == false { CFRunLoopRunInMode(CFRunLoopMode.defaultMode, 0.02, false) }
 		return r
 	}
 
-	static func getASync(urls: String, headers: [String: String]? = nil) -> UIImage? {
+	static func getASync(_ urls: String, headers: [String: String]? = nil) -> UIImage? {
 		guard let req = HTTP.shared.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
-		return requestASync(req)
+		return requestASync(req as URLRequest)
 	}
 
 	static func reset() {
@@ -145,30 +146,30 @@ public extension ImageLoader {
 // MARK: - result
 public extension ImageLoader {
 	enum ResultReason: Int {
-		case Cancelled = -100 // do not callback
-		case DecodeFailed
-		case DownloadFailed
-		case NoData
+		case cancelled = -100 // do not callback
+		case decodeFailed
+		case downloadFailed
+		case noData
 
-		case MemoryCached = 0
-		case FileCached = 1
-		case Downloaded = 2
+		case memoryCached = 0
+		case fileCached = 1
+		case downloaded = 2
 	}
 
 	struct Result {
 		public let image: UIImage?
 		public let reason: ResultReason
-		public let decodeTime: NSTimeInterval
-		public let downloadTime: NSTimeInterval
+		public let decodeTime: TimeInterval
+		public let downloadTime: TimeInterval
 
-		init(image: UIImage?, reason: ResultReason, decodeTime: NSTimeInterval = 0, downloadTime: NSTimeInterval = 0) {
+		init(image: UIImage?, reason: ResultReason, decodeTime: TimeInterval = 0, downloadTime: TimeInterval = 0) {
 			self.image = image
 			self.reason = reason
 			self.decodeTime = decodeTime
 			self.downloadTime = downloadTime
 		}
 
-		static func failed(reason: ResultReason) -> Result {
+		static func failed(_ reason: ResultReason) -> Result {
 			return Result(image: nil, reason: reason)
 		}
 	}
@@ -179,19 +180,19 @@ public extension ImageLoader {
 	public struct Filter {
 		public let identifier: String // for chache identifier
 		public var param: [String: AnyObject] = [:]
-		public var dataConverter: ((data: NSData, param: [String: AnyObject]) -> NSData?)? = nil
-		public var imageConverter: ((image: UIImage, param: [String: AnyObject]) -> UIImage?)? = nil
+		public var dataConverter: ((_ data: Data, _ param: [String: AnyObject]) -> Data?)? = nil
+		public var imageConverter: ((_ image: UIImage, _ param: [String: AnyObject]) -> UIImage?)? = nil
 
 		public init(identifier: String) {
 			self.identifier = identifier
 		}
 
-		public static func resizer(size: CGSize) -> Filter {
+		public static func resizer(_ size: CGSize) -> Filter {
 			var r = Filter(identifier: "\(size)")
-			r.param["size"] = NSValue(CGSize: size)
+			r.param["size"] = NSValue(cgSize: size)
 
 			r.imageConverter = { simg, param in
-				guard let sz = (param["size"] as? NSValue)?.CGSizeValue() else { return nil }
+				guard let sz = (param["size"] as? NSValue)?.cgSizeValue else { return nil }
 				return simg.resize(sz)
 			}
 			return r
@@ -202,13 +203,13 @@ public extension ImageLoader {
 // MARK: - cache
 extension ImageLoader {
 
-	class NNCache: NSCache {
+	class NNCache: NSCache<AnyObject, AnyObject> {
 		deinit {
 			removeNotifications()
 		}
 		override init() {
 			super.init()
-			addNotification(#selector(removeAllObjects), name: UIApplicationDidReceiveMemoryWarningNotification)
+			addNotification(#selector(removeAllObjects), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning.rawValue)
 		}
 	}
 }
@@ -221,10 +222,10 @@ public extension ImageLoader {
 		public static var memoryhit: Int = 0
 		public static var filehit: Int = 0
 		public static var download: Int = 0
-		public static var downtime: NSTimeInterval = 0
+		public static var downtime: TimeInterval = 0
 		public static var downsize: Int = 0
 		public static var decoded: Int = 0
-		public static var decodetime: NSTimeInterval = 0
+		public static var decodetime: TimeInterval = 0
 
 		public static func clear() {
 			show = 0
@@ -241,29 +242,29 @@ public extension ImageLoader {
 
 // MARK: - task
 public extension ImageLoader {
-	typealias ResultHandler = ((result: Result) -> Void)
-	typealias DecryptHandler = ((data: NSData?) -> NSData?)
+	typealias ResultHandler = ((_ result: Result) -> Void)
+	typealias DecryptHandler = ((_ data: Data?) -> Data?)
 
 	class Task: NSObject {
-		let request: NSURLRequest
-		weak var queue: NSOperationQueue?
+		let request: URLRequest
+		weak var queue: OperationQueue?
 		let path: String
 		var filter: Filter?
 		var completion: ResultHandler?
 
 		weak var downTask: HTTP.Task? = nil
-		weak var decodeTask: NSOperation? = nil
+		weak var decodeTask: Operation? = nil
 		var retry: Int = 0
-		var startTime: NSDate = NSDate()
+		var startTime: Date = Date()
 		var cancelled: Bool = false
-		var downloadTime: NSTimeInterval = 0
+		var downloadTime: TimeInterval = 0
 
 		var disableFileCache: Bool = false
-		var debugWaitTime: NSTimeInterval = 0
+		var debugWaitTime: TimeInterval = 0
 
 		deinit { }
 
-		init(queue: NSOperationQueue, request: NSURLRequest, path: String, filter: Filter?, completion: ResultHandler) {
+		init(queue: OperationQueue, request: URLRequest, path: String, filter: Filter?, completion: ResultHandler) {
 			self.queue = queue
 			self.request = request
 			self.path = path
@@ -281,15 +282,15 @@ public extension ImageLoader {
 			Bench.filehit += 1
 
 			// image decode
-			let deop = NSBlockOperation {
+			let deop = BlockOperation {
 				self.decodeTask = nil
 				if self.cancelled { return }
 
 				if !self.disableFileCache {
-					let data = NSData(contentsOfFile: self.path)
-					var decodeTime: NSTimeInterval = 0
+					let data = try? Data(contentsOf: URL(fileURLWithPath: self.path))
+					var decodeTime: TimeInterval = 0
 					if let img = self.decodeImage(data, decodeTime: &decodeTime) {
-						self.completion?(result: Result(image: img, reason: .FileCached, decodeTime: decodeTime))
+						self.completion?(Result(image: img, reason: .fileCached, decodeTime: decodeTime))
 						self.completion = nil
 						return
 					}
@@ -301,7 +302,7 @@ public extension ImageLoader {
 		}
 
 		func download() {
-			startTime = NSDate()
+			startTime = Date()
 			Bench.download += 1
 
 			let dlop = HTTP.request(request) {
@@ -319,36 +320,36 @@ public extension ImageLoader {
 							return
 						}
 					}
-					self.completion?(result: .failed(.DownloadFailed))
+					self.completion?(.failed(.downloadFailed))
 					self.completion = nil
 					return
 				}
 
 				if $0.status < 200 || $0.status > 399 {
-					self.completion?(result: .failed(.DownloadFailed))
+					self.completion?(.failed(.downloadFailed))
 					self.completion = nil
 					return
 				}
 
 				guard let data = $0.data else {
-					self.completion?(result: .failed(.NoData))
+					self.completion?(.failed(.noData))
 					self.completion = nil
 					return
 				}
 
-				Bench.downsize += data.length
+				Bench.downsize += data.count
 
 				// image decode
-				let deop = NSBlockOperation {
+				let deop = BlockOperation {
 					self.decodeTask = nil
 					if self.cancelled { return }
 
-					var decodeTime: NSTimeInterval = 0
+					var decodeTime: TimeInterval = 0
 					if let img = self.decodeImage(data, decodeTime: &decodeTime) {
-						self.completion?(result: Result(image: img, reason: .Downloaded, decodeTime: decodeTime, downloadTime: self.downloadTime))
-						data.writeToFile(self.path, atomically: true)
+						self.completion?(Result(image: img, reason: .downloaded, decodeTime: decodeTime, downloadTime: self.downloadTime))
+						(data as NSData).write(toFile: self.path, atomically: true)
 					} else {
-						self.completion?(result: .failed(.DecodeFailed))
+						self.completion?(.failed(.decodeFailed))
 					}
 					self.completion = nil
 				}
@@ -358,20 +359,20 @@ public extension ImageLoader {
 			downTask = dlop
 		}
 
-		func decodeImage(data: NSData?, inout decodeTime: NSTimeInterval) -> UIImage? {
+		func decodeImage(_ data: Data?, decodeTime: inout TimeInterval) -> UIImage? {
 			guard var data = data else { return nil }
-			let startTime = NSDate()
+			let startTime = Date()
 
-			if let dhandler = filter?.dataConverter, param = filter?.param {
-				guard let da = dhandler(data: data, param: param) else { return nil }
+			if let dhandler = filter?.dataConverter, let param = filter?.param {
+				guard let da = dhandler(data, param) else { return nil }
 				data = da
 			}
 
 			var rimg: UIImage? = nil
 
-			if let fhandler = filter?.imageConverter, param = filter?.param {
+			if let fhandler = filter?.imageConverter, let param = filter?.param {
 				if let img = UIImage.decode(data, memorized: false) {
-					rimg = fhandler(image: img, param: param)
+					rimg = fhandler(img, param)
 				}
 			} else {
 				rimg = UIImage.decode(data, memorized: true)
@@ -381,12 +382,12 @@ public extension ImageLoader {
 			Bench.decodetime += decodeTime
 			Bench.decoded += 1
 
-			if debugWaitTime > 0 { NSThread.sleepForTimeInterval(debugWaitTime) }
+			if debugWaitTime > 0 { Thread.sleep(forTimeInterval: debugWaitTime) }
 
 			return rimg
 		}
 
-		public func cancel() {
+		open func cancel() {
 			cancelled = true
 			decodeTask?.cancel()
 			downTask?.cancel()
