@@ -36,7 +36,7 @@ open class ImageLoader: NSObject {
 		addNotification(#selector(cleanCache), name: NSNotification.Name.UIApplicationDidEnterBackground.rawValue)
 	}
 
-	func request(_ request: URLRequest, filter: Filter?, completion: ResultHandler) -> Task? {
+	func request(_ request: URLRequest, filter: Filter?, completion: @escaping ResultHandler) -> Task? {
 
 		if let dmy = dummyImage {
 			completion(Result(image: dmy, reason: .memoryCached))
@@ -104,27 +104,27 @@ open class ImageLoader: NSObject {
 public extension ImageLoader {
 
 	// MARK:  normal get
-	static func request(_ request: URLRequest, filter: Filter? = nil, completion: ResultHandler) -> Task? {
+	@discardableResult static func request(_ request: URLRequest, filter: Filter? = nil, completion:  @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: filter, completion: completion)
 	}
 
-	static func get(_ urls: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: ResultHandler) -> Task? {
+	@discardableResult static func get(_ urls: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
 		guard let req = HTTP.shared.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
 		return request(req as URLRequest, filter: filter, completion: completion)
 	}
 
 	// MARK:  sized get
-	static func request(_ request: URLRequest, size: CGSize, completion: ResultHandler) -> Task? {
+	@discardableResult static func request(_ request: URLRequest, size: CGSize, completion: @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: Filter.resizer(size), completion: completion)
 	}
 
-	static func get(_ urls: String, size: CGSize, headers: [String: String]? = nil, completion: ResultHandler) -> Task? {
+	@discardableResult static func get(_ urls: String, size: CGSize, headers: [String: String]? = nil, completion: @escaping ResultHandler) -> Task? {
 		guard let req = HTTP.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
 		return request(req as URLRequest, size: size, completion: completion)
 	}
 
 	// MARK: async get (dont call in main task)
-	static func requestASync(_ request: URLRequest) -> UIImage? {
+	@discardableResult static func requestASync(_ request: URLRequest) -> UIImage? {
 		var r: UIImage? = nil
 		var done = false
 
@@ -264,7 +264,7 @@ public extension ImageLoader {
 
 		deinit { }
 
-		init(queue: OperationQueue, request: URLRequest, path: String, filter: Filter?, completion: ResultHandler) {
+		init(queue: OperationQueue, request: URLRequest, path: String, filter: Filter?, completion: @escaping ResultHandler) {
 			self.queue = queue
 			self.request = request
 			self.path = path
