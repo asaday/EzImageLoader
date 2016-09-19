@@ -145,7 +145,7 @@ public extension ImageLoader {
 
 // MARK: - result
 public extension ImageLoader {
-	enum ResultReason: Int {
+	public enum ResultReason: Int {
 		case cancelled = -100 // do not callback
 		case decodeFailed
 		case downloadFailed
@@ -156,7 +156,7 @@ public extension ImageLoader {
 		case downloaded = 2
 	}
 
-	struct Result {
+	public struct Result {
 		public let image: UIImage?
 		public let reason: ResultReason
 		public let decodeTime: TimeInterval

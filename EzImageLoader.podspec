@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "EzImageLoader"
-s.version      = "0.0.4"
+s.version      = "3.0.4"
 s.summary      = "image loader"
 
 s.homepage     = "http://nagisaworks.com"
@@ -20,7 +20,7 @@ s.module_map = 'resources/module.modulemap'
 s.private_header_files = 'sources/webp.h','sources/CommonCrypto_re.h'
 
 s.xcconfig = {
-    'SWIFT_VERSION' => '3'
+    'SWIFT_VERSION' => '3.0'
   }
 
 end
