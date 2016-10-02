@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A21E16C51F3BAAD1CB1FACE7 /* Pods_EzImageLoaderSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453AEB05A55E2B76E9BD9987 /* Pods_EzImageLoaderSample.framework */; };
 		C36D95621D4069FD00F0CE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D95611D4069FD00F0CE31 /* AppDelegate.swift */; };
 		C36D95641D4069FD00F0CE31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D95631D4069FD00F0CE31 /* ViewController.swift */; };
 		C36D95671D4069FD00F0CE31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36D95651D4069FD00F0CE31 /* Main.storyboard */; };
@@ -16,7 +15,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		453AEB05A55E2B76E9BD9987 /* Pods_EzImageLoaderSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EzImageLoaderSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA846A49C42948445AAC8B3 /* Pods-EzImageLoaderSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzImageLoaderSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EzImageLoaderSample/Pods-EzImageLoaderSample.debug.xcconfig"; sourceTree = "<group>"; };
 		C36D955E1D4069FD00F0CE31 /* EzImageLoaderSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EzImageLoaderSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36D95611D4069FD00F0CE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +31,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A21E16C51F3BAAD1CB1FACE7 /* Pods_EzImageLoaderSample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +71,6 @@
 		D5D144323B870E8423A52936 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				453AEB05A55E2B76E9BD9987 /* Pods_EzImageLoaderSample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

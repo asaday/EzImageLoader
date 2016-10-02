@@ -33,7 +33,7 @@ open class ImageLoader: NSObject {
 		cache.countLimit = 200
 
 		cleanCache()
-		addNotification(#selector(cleanCache), name: NSNotification.Name.UIApplicationDidEnterBackground.rawValue)
+		addNotification(#selector(cleanCache), name: Notification.Name.UIApplicationDidEnterBackground.rawValue)
 	}
 
 	func request(_ request: URLRequest, filter: Filter?, completion: @escaping ResultHandler) -> Task? {
@@ -162,7 +162,7 @@ public extension ImageLoader {
 		public let decodeTime: TimeInterval
 		public let downloadTime: TimeInterval
 
-		init(image: UIImage?, reason: ResultReason, decodeTime: TimeInterval = 0, downloadTime: TimeInterval = 0) {
+		public init(image: UIImage?, reason: ResultReason, decodeTime: TimeInterval = 0, downloadTime: TimeInterval = 0) {
 			self.image = image
 			self.reason = reason
 			self.decodeTime = decodeTime
@@ -179,9 +179,9 @@ public extension ImageLoader {
 public extension ImageLoader {
 	public struct Filter {
 		public let identifier: String // for chache identifier
-		public var param: [String: AnyObject] = [:]
-		public var dataConverter: ((_ data: Data, _ param: [String: AnyObject]) -> Data?)? = nil
-		public var imageConverter: ((_ image: UIImage, _ param: [String: AnyObject]) -> UIImage?)? = nil
+		public var param: [String: Any] = [:]
+		public var dataConverter: ((_ data: Data, _ param: [String: Any]) -> Data?)? = nil
+		public var imageConverter: ((_ image: UIImage, _ param: [String: Any]) -> UIImage?)? = nil
 
 		public init(identifier: String) {
 			self.identifier = identifier
@@ -209,7 +209,7 @@ extension ImageLoader {
 		}
 		override init() {
 			super.init()
-			addNotification(#selector(removeAllObjects), name: NSNotification.Name.UIApplicationDidReceiveMemoryWarning.rawValue)
+			addNotification(#selector(removeAllObjects), name: Notification.Name.UIApplicationDidReceiveMemoryWarning.rawValue)
 		}
 	}
 }

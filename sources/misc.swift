@@ -84,13 +84,13 @@ extension NSObject {
 	// black magic
 	fileprivate struct AssociatedKeys { static var name = "name" }
 
-	func getAssociate(_ key: String) -> AnyObject? {
-		guard let dic = objc_getAssociatedObject(self, &AssociatedKeys.name) as? [String: AnyObject] else { return nil }
+	func getAssociate(_ key: String) -> Any? {
+		guard let dic = objc_getAssociatedObject(self, &AssociatedKeys.name) as? [String: Any] else { return nil }
 		return dic[key]
 	}
 
-	func setAssociate(_ key: String, value: AnyObject?) {
-		var dic = (objc_getAssociatedObject(self, &AssociatedKeys.name) as? [String: AnyObject]) ?? [:]
+	func setAssociate(_ key: String, value: Any?) {
+		var dic = (objc_getAssociatedObject(self, &AssociatedKeys.name) as? [String: Any]) ?? [:]
 		dic[key] = value
 		objc_setAssociatedObject(self, &AssociatedKeys.name, dic, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 	}
