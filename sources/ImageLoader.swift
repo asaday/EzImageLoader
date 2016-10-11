@@ -36,7 +36,7 @@ open class ImageLoader: NSObject {
 		addNotification(#selector(cleanCache), name: Notification.Name.UIApplicationDidEnterBackground.rawValue)
 	}
 
-	func request(_ request: URLRequest, filter: Filter?, completion: @escaping ResultHandler) -> Task? {
+	@discardableResult func request(_ request: URLRequest, filter: Filter?, completion: @escaping ResultHandler) -> Task? {
 
 		if let dmy = dummyImage {
 			completion(Result(image: dmy, reason: .memoryCached))

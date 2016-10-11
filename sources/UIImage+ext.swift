@@ -78,7 +78,8 @@ public extension UIImage {
 
 		var images: [UIImage] = []
 		for i in 0 ..< count {
-			if let ref: CGImage = CGImageSourceCreateImageAtIndex(imgSource, i, nil), let img: UIImage = UIImage(cgImage: ref) {
+			if let ref: CGImage = CGImageSourceCreateImageAtIndex(imgSource, i, nil) {
+				let img: UIImage = UIImage(cgImage: ref)
 				images.append(img)
 			}
 		}

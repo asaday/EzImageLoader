@@ -56,7 +56,7 @@ extension String {
 		if !self.hasString("://") { return result }
 		guard var c = URLComponents(string: self) else { return result }
 
-		if c.path == nil { c.path = "/" }
+		if c.path == "" { c.path = "/" }
 		c.path = c.path.to_ns().appendingPathComponent(path)
 		return c.string ?? result
 	}
@@ -115,14 +115,14 @@ struct Path {
 	static func support(_ path: String) -> String { return Path.support.appendPath(path) }
 	static func resource(_ path: String) -> String { return Path.resource.appendPath(path) }
 
-	static func remove(_ path: String) -> Bool {
+	@discardableResult static func remove(_ path: String) -> Bool {
 		do {
 			try FileManager.default.removeItem(atPath: path)
 		} catch { return false }
 		return true
 	}
 
-	static func mkdir(_ path: String) -> Bool {
+	@discardableResult static func mkdir(_ path: String) -> Bool {
 		do {
 			try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
 		} catch { return false }
