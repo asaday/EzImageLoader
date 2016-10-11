@@ -19,8 +19,5 @@ s.dependency  'EzHTTP'
 s.module_map = 'resources/module.modulemap'
 s.private_header_files = 'sources/webp.h','sources/CommonCrypto_re.h'
 
-s.xcconfig = {
-    'SWIFT_VERSION' => '3.0'
-  }
 
 end
