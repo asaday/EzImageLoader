@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03771EACA8290D38203CAB77 /* Pods_EzImageLoaderSampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B131B22E460EEF30C5915B6 /* Pods_EzImageLoaderSampleTests.framework */; };
+		C31DBBCF1DBA11B4009BC34B /* EzImageLoaderSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31DBBCE1DBA11B4009BC34B /* EzImageLoaderSampleTests.swift */; };
 		C36D95621D4069FD00F0CE31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D95611D4069FD00F0CE31 /* AppDelegate.swift */; };
 		C36D95641D4069FD00F0CE31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36D95631D4069FD00F0CE31 /* ViewController.swift */; };
 		C36D95671D4069FD00F0CE31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36D95651D4069FD00F0CE31 /* Main.storyboard */; };
@@ -15,9 +17,25 @@
 		DCA130A7995D7C6AE088CD0E /* Pods_EzImageLoaderSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81CDAEC16B23B910D5558F29 /* Pods_EzImageLoaderSample.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C31DBBD11DBA11B4009BC34B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C36D95561D4069FD00F0CE31 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C36D955D1D4069FD00F0CE31;
+			remoteInfo = EzImageLoaderSample;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		4B131B22E460EEF30C5915B6 /* Pods_EzImageLoaderSampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EzImageLoaderSampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7985AC70593E6A18EF0D0D90 /* Pods-EzImageLoaderSampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzImageLoaderSampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		81CDAEC16B23B910D5558F29 /* Pods_EzImageLoaderSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EzImageLoaderSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8848572FE75D7DAA5AD9B241 /* Pods-EzImageLoaderSampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzImageLoaderSampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8CA846A49C42948445AAC8B3 /* Pods-EzImageLoaderSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzImageLoaderSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EzImageLoaderSample/Pods-EzImageLoaderSample.debug.xcconfig"; sourceTree = "<group>"; };
+		C31DBBCC1DBA11B4009BC34B /* EzImageLoaderSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EzImageLoaderSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C31DBBCE1DBA11B4009BC34B /* EzImageLoaderSampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EzImageLoaderSampleTests.swift; sourceTree = "<group>"; };
+		C31DBBD01DBA11B4009BC34B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C36D955E1D4069FD00F0CE31 /* EzImageLoaderSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EzImageLoaderSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36D95611D4069FD00F0CE31 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C36D95631D4069FD00F0CE31 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,6 +47,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C31DBBC91DBA11B4009BC34B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03771EACA8290D38203CAB77 /* Pods_EzImageLoaderSampleTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C36D955B1D4069FD00F0CE31 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -40,10 +66,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C31DBBCD1DBA11B4009BC34B /* EzImageLoaderSampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				C31DBBCE1DBA11B4009BC34B /* EzImageLoaderSampleTests.swift */,
+				C31DBBD01DBA11B4009BC34B /* Info.plist */,
+			);
+			path = EzImageLoaderSampleTests;
+			sourceTree = "<group>";
+		};
 		C36D95551D4069FD00F0CE31 = {
 			isa = PBXGroup;
 			children = (
 				C36D95601D4069FD00F0CE31 /* sample */,
+				C31DBBCD1DBA11B4009BC34B /* EzImageLoaderSampleTests */,
 				C36D955F1D4069FD00F0CE31 /* Products */,
 				E6C258EAE18C52F0FC62C0C8 /* Pods */,
 				D5D144323B870E8423A52936 /* Frameworks */,
@@ -54,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				C36D955E1D4069FD00F0CE31 /* EzImageLoaderSample.app */,
+				C31DBBCC1DBA11B4009BC34B /* EzImageLoaderSampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				81CDAEC16B23B910D5558F29 /* Pods_EzImageLoaderSample.framework */,
+				4B131B22E460EEF30C5915B6 /* Pods_EzImageLoaderSampleTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -84,6 +122,8 @@
 			children = (
 				8CA846A49C42948445AAC8B3 /* Pods-EzImageLoaderSample.debug.xcconfig */,
 				DF6DC31241859B5AEEAF8F7B /* Pods-EzImageLoaderSample.release.xcconfig */,
+				8848572FE75D7DAA5AD9B241 /* Pods-EzImageLoaderSampleTests.debug.xcconfig */,
+				7985AC70593E6A18EF0D0D90 /* Pods-EzImageLoaderSampleTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -91,6 +131,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C31DBBCB1DBA11B4009BC34B /* EzImageLoaderSampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C31DBBD51DBA11B4009BC34B /* Build configuration list for PBXNativeTarget "EzImageLoaderSampleTests" */;
+			buildPhases = (
+				2833104D737182178E13BDAE /* [CP] Check Pods Manifest.lock */,
+				C31DBBC81DBA11B4009BC34B /* Sources */,
+				C31DBBC91DBA11B4009BC34B /* Frameworks */,
+				C31DBBCA1DBA11B4009BC34B /* Resources */,
+				D912B38E3842486A1B533886 /* [CP] Embed Pods Frameworks */,
+				20113062D6D8C7D5398BC3CC /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C31DBBD21DBA11B4009BC34B /* PBXTargetDependency */,
+			);
+			name = EzImageLoaderSampleTests;
+			productName = EzImageLoaderSampleTests;
+			productReference = C31DBBCC1DBA11B4009BC34B /* EzImageLoaderSampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C36D955D1D4069FD00F0CE31 /* EzImageLoaderSample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C36D95701D4069FD00F0CE31 /* Build configuration list for PBXNativeTarget "EzImageLoaderSample" */;
@@ -117,10 +178,16 @@
 		C36D95561D4069FD00F0CE31 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = asada;
 				TargetAttributes = {
+					C31DBBCB1DBA11B4009BC34B = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 5E2LE3SXM6;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C36D955D1D4069FD00F0CE31;
+					};
 					C36D955D1D4069FD00F0CE31 = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0800;
@@ -141,11 +208,19 @@
 			projectRoot = "";
 			targets = (
 				C36D955D1D4069FD00F0CE31 /* EzImageLoaderSample */,
+				C31DBBCB1DBA11B4009BC34B /* EzImageLoaderSampleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C31DBBCA1DBA11B4009BC34B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C36D955C1D4069FD00F0CE31 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -159,6 +234,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		20113062D6D8C7D5398BC3CC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2833104D737182178E13BDAE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		49F21A9B45A6FA8F834CD701 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -204,9 +309,32 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		D912B38E3842486A1B533886 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C31DBBC81DBA11B4009BC34B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C31DBBCF1DBA11B4009BC34B /* EzImageLoaderSampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C36D955A1D4069FD00F0CE31 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -217,6 +345,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C31DBBD21DBA11B4009BC34B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C36D955D1D4069FD00F0CE31 /* EzImageLoaderSample */;
+			targetProxy = C31DBBD11DBA11B4009BC34B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C36D95651D4069FD00F0CE31 /* Main.storyboard */ = {
@@ -238,6 +374,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C31DBBD31DBA11B4009BC34B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8848572FE75D7DAA5AD9B241 /* Pods-EzImageLoaderSampleTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = 5E2LE3SXM6;
+				INFOPLIST_FILE = EzImageLoaderSampleTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoaderSampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EzImageLoaderSample.app/EzImageLoaderSample";
+			};
+			name = Debug;
+		};
+		C31DBBD41DBA11B4009BC34B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7985AC70593E6A18EF0D0D90 /* Pods-EzImageLoaderSampleTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				DEVELOPMENT_TEAM = 5E2LE3SXM6;
+				INFOPLIST_FILE = EzImageLoaderSampleTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoaderSampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EzImageLoaderSample.app/EzImageLoaderSample";
+			};
+			name = Release;
+		};
 		C36D956E1D4069FD00F0CE31 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -367,6 +540,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C31DBBD51DBA11B4009BC34B /* Build configuration list for PBXNativeTarget "EzImageLoaderSampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C31DBBD31DBA11B4009BC34B /* Debug */,
+				C31DBBD41DBA11B4009BC34B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C36D95591D4069FD00F0CE31 /* Build configuration list for PBXProject "EzImageLoaderSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

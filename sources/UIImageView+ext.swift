@@ -30,4 +30,14 @@ public extension UIImageView {
 		return loadRequest(req as URLRequest, filter: filter, handler: handler)
 	}
 
+	public func loadFadeinURL(_ urls: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil) {
+		loadURL(urls, headers: headers, filter: filter, handler: UIImageView.fadeinHandler)
+	}
+
+	public static func fadeinHandler(_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void {
+		if result.reason != .downloaded { return }
+		imageView.alpha = 0
+		UIView.animate(withDuration: 0.3) { imageView.alpha = 1 }
+	}
+	
 }

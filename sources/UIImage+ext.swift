@@ -53,7 +53,7 @@ public extension UIImage {
 
 		ctx?.translateBy(x: 0, y: image.size.height)
 		ctx?.scaleBy(x: 1, y: -1)
-		ctx?.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height) )
+		ctx?.draw(image.cgImage!, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
 		let ret = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		return ret

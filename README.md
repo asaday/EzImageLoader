@@ -29,14 +29,7 @@ Add EzImageLoader to the dependencies in your Podfile.
 pod 'EzImageLoader'
 ```
 
-**Swift 2**
-
-```
-pod 'EzImageLoader', '> 1.0'
-```
-
-
-In Swift 3, you'll get "Convert to Current Swift Syntax?" dialog. Cocoapod still hasn't support Swift 3. If you don't want to these dialogs, please add lines the below at the end of Podfile.
+Though you've installed EzHTTP v3, you'll see the "Convert to Current Swift Syntax?" dialog on Xcode 8. Cocoapod still hasn't support Swift 3. If you don't want to get these dialogs, please add lines the below at the end of Podfile.
 
 ```
 post_install do | installer |
@@ -51,6 +44,16 @@ end
 Sample Podfile is [here](https://github.com/asaday/EzImageLoader/blob/master/exsample/Podfile).
 
 
+
+**Swift 2**
+
+EzImageLoader uses EzHTTP library and requires EzHTTP 0.0.x for Swift 2. So, please write installing EzHTTP and its version explicitly.
+
+```
+pod 'EzHTTP', '~> 0.0'
+pod 'EzImageLoader', '~> 0.0'
+```
+
 ###Carthage
 You can also install EzImageLoader with Carthage. Add this line in your Cartfile.
 
@@ -63,7 +66,8 @@ github "asaday/EzImageLoader"
 **Swift 2**
 
 ```
-github "asaday/EzImageLoader" > 1.0
+github "asaday/EzHTTP" ~> 0.0
+github "asaday/EzImageLoader" ~> 0.0
 ```
 
 
@@ -102,7 +106,7 @@ ImageLoader.get(urlStr, size: mSize) {iv.image = $0.image}
 
 ####URLRequest
 
-Get an image with NSURLRequest created with EzHTTP.
+Get an image with NSURLRequest.  Note that "HTTP.createRequest()" creates URLRequest with EzHTTP.
 
 ```
 let iv = UIImageView(frame: view.bounds)
@@ -119,7 +123,7 @@ ImageLoader.request(req!, size:mSize) {iv.image = $0.image}
 
 ####Result
 
-You can get some information about your request. ResultReason is enumeration type and gives status of the result. 
+You can get some information about a request. ResultReason is enumeration type and gives status of the result. 
 
 - `$0.image` UIImage?
 - `$0.reason` enum ResultReason
@@ -163,7 +167,7 @@ EzImageLoader extends UIImageView. It's very simple to use.
 let iv = UIImageView(frame: view.bounds)
 iv.loadURL("https://httpbin.org/image/webp")
 
-// Adding headers
+// With additional headers
 iv.loadURL("https://httpbin.org/image/png", headers: ["Custom-Content":"HAHAHA"])
 
 // Apply Filter
@@ -171,7 +175,7 @@ let ilFilter = ImageLoader.Filter.resizer(CGSize(width: 320, height: 320))
 iv.loadURL("https://httpbin.org/image/png", filter: ilFilter)
 ```
 
-Use with URLRequest (Note that this sample is using EzHTTP)
+Use with URLRequest.
 
 ```
 let iv = UIImageView(frame: view.bounds)
@@ -186,13 +190,13 @@ iv.loadRequest(req!, filter: ilFilter)
 
 ### UIImage Extension
 
-UIImage resize
+Resizing a image for UIImage.
 
 ```
 let img:UIImage = #imageLiteral(resourceName: "SpImage").resize(CGSize(width: 280, height: 280))
 ```
 
-Get an image as Data and decode to UIImage with EzHTTTP. You can use animation GIFs and WebPs well.
+Get an image as Data and decode to UIImage. You can use animation GIFs and WebPs well.
 
 ```
 let gifURL = "https://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif"
