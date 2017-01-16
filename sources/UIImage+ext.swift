@@ -14,11 +14,11 @@ public extension UIImage {
 		let xz = size.width / size.width
 		let yz = size.height / size.height
 		let z = ((xz < yz) != fill) ? xz : yz
-		let twidth = ceil(size.width * z)
-		let theight = ceil(size.height * z)
-		let tx = floor((size.width - twidth)) / 2
-		let ty = floor((size.height - theight)) / 2
-		let rc = CGRect(x: tx, y: ty, width: twidth, height: theight)
+		let twidth = size.width * z
+		let theight = size.height * z
+		let tx = (size.width - twidth) / 2
+		let ty = (size.height - theight) / 2
+		let rc = CGRect(x: tx, y: ty, width: twidth, height: theight).integral
 
 		UIGraphicsBeginImageContextWithOptions(size, false, 0)
 		let ctx = UIGraphicsGetCurrentContext()
@@ -27,7 +27,7 @@ public extension UIImage {
 		ctx?.draw(cgImage!, in: rc)
 		let ret = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		return ret!
+		return ret ?? UIImage()
 	}
 
 	public static func decode(_ data: Data, memorized: Bool = true) -> UIImage? {

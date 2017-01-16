@@ -59,7 +59,11 @@ open class ImageLoader: NSObject {
 		let isMain = Thread.isMainThread
 
 		let op = Task(queue: queue, request: request, path: path, filter: filter) { [weak self] result in
-			if let me = self, let uimg = result.image { me.cache.setObject(uimg, forKey: key as AnyObject) }
+			if let me = self, let uimg = result.image {
+				if !me.disableMemoryCache {
+					me.cache.setObject(uimg, forKey: key as AnyObject)
+				}
+			}
 			Dispatch.doAsMain(isMain) { completion(result) }
 		}
 		op.disableFileCache = disableFileCache
@@ -108,11 +112,16 @@ public extension ImageLoader {
 		return shared.request(request, filter: filter, completion: completion)
 	}
 
-	@discardableResult static func get(_ urls: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
-		guard let req = HTTP.shared.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
+	@discardableResult static func get(_ urlstring: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
+		guard let req = HTTP.createRequest(.GET, urlstring, params: nil, headers: headers) else { return nil }
 		return request(req as URLRequest, filter: filter, completion: completion)
 	}
-
+	
+	@discardableResult static func get(_ url: URL, headers: [String: String]? = nil, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
+		guard let req = HTTP.createRequest(.GET, url, params: nil, headers: headers) else { return nil }
+		return request(req as URLRequest, filter: filter, completion: completion)
+	}
+	
 	// MARK:  sized get
 	@discardableResult static func request(_ request: URLRequest, size: CGSize, completion: @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: Filter.resizer(size), completion: completion)
@@ -120,7 +129,7 @@ public extension ImageLoader {
 
 	@discardableResult static func get(_ urls: String, size: CGSize, headers: [String: String]? = nil, completion: @escaping ResultHandler) -> Task? {
 		guard let req = HTTP.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
-		return request(req as URLRequest, size: size, completion: completion)
+		return request(req, size: size, completion: completion)
 	}
 
 	// MARK: async get (dont call in main task)
@@ -134,8 +143,8 @@ public extension ImageLoader {
 	}
 
 	static func getASync(_ urls: String, headers: [String: String]? = nil) -> UIImage? {
-		guard let req = HTTP.shared.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
-		return requestASync(req as URLRequest)
+		guard let req = HTTP.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
+		return requestASync(req)
 	}
 
 	static func reset() {
