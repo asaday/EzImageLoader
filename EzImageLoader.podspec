@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "EzImageLoader"
-s.version      = "3.0.7"
+s.version      = "3.1.0"
 s.summary      = "image loader"
 
 s.homepage     = "http://nagisaworks.com"
@@ -18,7 +18,5 @@ s.requires_arc = true
 s.dependency  'EzHTTP'
 s.module_map = 'resources/module.modulemap'
 s.private_header_files = 'sources/webp.h','sources/CommonCrypto_re.h'
-
-s.pod_target_xcconfig =  { 'SWIFT_VERSION' => '3.0' }
 
 end
