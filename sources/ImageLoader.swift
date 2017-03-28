@@ -45,8 +45,8 @@ open class ImageLoader: NSObject {
 
 		Bench.show += 1
 
-		let key = "\(request.url?.absoluteString)_\(filter?.identifier ?? "")".md5
-		let path = cachePath.appendPath("\(request.url?.absoluteString)".md5)
+		let key = "\(request.url?.absoluteString ?? "")_\(filter?.identifier ?? "")".md5
+		let path = cachePath.appendPath("\(request.url?.absoluteString ?? "")".md5)
 
 		if !disableMemoryCache {
 			if let img = cache.object(forKey: key as AnyObject) as? UIImage {
