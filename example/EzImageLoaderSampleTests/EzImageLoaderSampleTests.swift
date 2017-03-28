@@ -17,12 +17,12 @@ class EzImageLoaderSampleTests: XCTestCase {
 
 	override func tearDown() {
 		// Put teardown code here. This method is called after the invocation of each test method in the class.
-			super.tearDown()
+		super.tearDown()
 	}
 
 	func testGet() {
 		let expectation = self.expectation(description: "")
-		ImageLoader.get(src + "/png") { (res) in
+		ImageLoader.get(src + "/png") { res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(res.image)
 			expectation.fulfill()
@@ -32,7 +32,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 
 	func testGetJpeg() {
 		let expectation = self.expectation(description: "")
-		ImageLoader.get(src + "/jpeg") { (res) in
+		ImageLoader.get(src + "/jpeg") { res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(res.image)
 			expectation.fulfill()
@@ -42,7 +42,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 
 	func testGetWebP() {
 		let expectation = self.expectation(description: "")
-		ImageLoader.get(src + "/webp") { (res) in
+		ImageLoader.get(src + "/webp") { res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(res.image)
 			expectation.fulfill()
@@ -53,7 +53,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 	func testGetWithResizing() {
 		let expectation = self.expectation(description: "")
 		let mSize = CGSize(width: 200, height: 200)
-		ImageLoader.get(src + "/png", size: mSize) { (res) in
+		ImageLoader.get(src + "/png", size: mSize) { res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(res.image)
 			XCTAssertEqual(res.image?.size, mSize)
@@ -65,7 +65,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 	func testGetRequest() {
 		let expectation = self.expectation(description: "")
 		let req = HTTP.createRequest(.GET, src + "/png", params: [:], headers: [:])
-		ImageLoader.request(req!) { (res) in
+		ImageLoader.request(req!) { res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(res.image)
 			expectation.fulfill()
@@ -75,7 +75,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 
 	func testGetWithHeader() {
 		let expectation = self.expectation(description: "")
-		ImageLoader.get(src, headers: ["Accept": "image/jpeg"]) { (res) in
+		ImageLoader.get(src, headers: ["Accept": "image/jpeg"]) { res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(res.image)
 			expectation.fulfill()
@@ -86,7 +86,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 	func testUIImageViewLoad() {
 		let expectation = self.expectation(description: "")
 		let iv = UIImageView(frame: UIScreen.main.bounds)
-		iv.loadURL(src + "/png") { (view, res) in
+		iv.loadURL(src + "/png") { view, res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(view.image)
 			expectation.fulfill()
@@ -99,7 +99,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 		let mSyze = CGSize(width: 64, height: 64)
 		let ilFilter = ImageLoader.Filter.resizer(mSyze)
 		let iv = UIImageView(frame: UIScreen.main.bounds)
-		iv.loadURL(src + "/png", filter: ilFilter) { (view, res) in
+		iv.loadURL(src + "/png", filter: ilFilter) { view, res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(view.image)
 			XCTAssertEqual(view.image?.size, mSyze)
@@ -110,7 +110,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 
 	func testUIImageResize() {
 		let expectation = self.expectation(description: "")
-		ImageLoader.get(src + "/png") { (res) in
+		ImageLoader.get(src + "/png") { res in
 			XCTAssertNotNil(res.image)
 			let mSize = CGSize(width: 200, height: 200)
 			let img: UIImage? = res.image?.resize(mSize)
@@ -120,7 +120,6 @@ class EzImageLoaderSampleTests: XCTestCase {
 		}
 		waitForExpectations(timeout: 5, handler: nil)
 	}
-
 
 	func testUiimageDecode() {
 		let expectation = self.expectation(description: "")

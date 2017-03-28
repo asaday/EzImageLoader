@@ -15,7 +15,4 @@ class ViewController: UIViewController {
 		v.contentMode = .scaleAspectFit
 		v.loadURL("https://httpbin.org/image/jpeg")
 	}
-
-
 }
-

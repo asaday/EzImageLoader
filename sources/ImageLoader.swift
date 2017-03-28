@@ -45,7 +45,7 @@ open class ImageLoader: NSObject {
 
 		Bench.show += 1
 
-		let key = "\(request.url?.absoluteString)_\( filter?.identifier ?? "")".md5
+		let key = "\(request.url?.absoluteString)_\(filter?.identifier ?? "")".md5
 		let path = cachePath.appendPath("\(request.url?.absoluteString)".md5)
 
 		if !disableMemoryCache {
@@ -104,10 +104,10 @@ open class ImageLoader: NSObject {
 	}
 }
 
-// MARK:- static functions
+// MARK: - static functions
 public extension ImageLoader {
 
-	// MARK:  normal get
+	// MARK: normal get
 	@discardableResult static func request(_ request: URLRequest, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: filter, completion: completion)
 	}
@@ -116,13 +116,13 @@ public extension ImageLoader {
 		guard let req = HTTP.createRequest(.GET, urlstring, params: nil, headers: headers) else { return nil }
 		return request(req as URLRequest, filter: filter, completion: completion)
 	}
-	
+
 	@discardableResult static func get(_ url: URL, headers: [String: String]? = nil, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
 		guard let req = HTTP.createRequest(.GET, url, params: nil, headers: headers) else { return nil }
 		return request(req as URLRequest, filter: filter, completion: completion)
 	}
-	
-	// MARK:  sized get
+
+	// MARK: sized get
 	@discardableResult static func request(_ request: URLRequest, size: CGSize, completion: @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: Filter.resizer(size), completion: completion)
 	}
@@ -134,7 +134,7 @@ public extension ImageLoader {
 
 	// MARK: async get (dont call in main task)
 	@discardableResult static func requestASync(_ request: URLRequest) -> UIImage? {
-		var r: UIImage? = nil
+		var r: UIImage?
 		var done = false
 
 		shared.request(request, filter: nil) { r = $0.image; done = true }
@@ -189,8 +189,8 @@ public extension ImageLoader {
 	public struct Filter {
 		public let identifier: String // for chache identifier
 		public var param: [String: Any] = [:]
-		public var dataConverter: ((_ data: Data, _ param: [String: Any]) -> Data?)? = nil
-		public var imageConverter: ((_ image: UIImage, _ param: [String: Any]) -> UIImage?)? = nil
+		public var dataConverter: ((_ data: Data, _ param: [String: Any]) -> Data?)?
+		public var imageConverter: ((_ image: UIImage, _ param: [String: Any]) -> UIImage?)?
 
 		public init(identifier: String) {
 			self.identifier = identifier
@@ -216,6 +216,7 @@ extension ImageLoader {
 		deinit {
 			removeNotifications()
 		}
+
 		override init() {
 			super.init()
 			addNotification(#selector(removeAllObjects), name: Notification.Name.UIApplicationDidReceiveMemoryWarning.rawValue)
@@ -261,8 +262,8 @@ public extension ImageLoader {
 		var filter: Filter?
 		var completion: ResultHandler?
 
-		weak var downTask: HTTP.Task? = nil
-		weak var decodeTask: Operation? = nil
+		weak var downTask: HTTP.Task?
+		weak var decodeTask: Operation?
 		var retry: Int = 0
 		var startTime: Date = Date()
 		var cancelled: Bool = false
@@ -271,7 +272,7 @@ public extension ImageLoader {
 		var disableFileCache: Bool = false
 		var debugWaitTime: TimeInterval = 0
 
-		deinit { }
+		deinit {}
 
 		init(queue: OperationQueue, request: URLRequest, path: String, filter: Filter?, completion: @escaping ResultHandler) {
 			self.queue = queue
@@ -377,7 +378,7 @@ public extension ImageLoader {
 				data = da
 			}
 
-			var rimg: UIImage? = nil
+			var rimg: UIImage?
 
 			if let fhandler = filter?.imageConverter, let param = filter?.param {
 				if let img = UIImage.decode(data, memorized: false) {
@@ -406,4 +407,3 @@ public extension ImageLoader {
 		}
 	}
 }
-
