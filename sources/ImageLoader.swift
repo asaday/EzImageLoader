@@ -36,7 +36,7 @@ open class ImageLoader: NSObject {
 		addNotification(#selector(cleanCache), name: Notification.Name.UIApplicationDidEnterBackground.rawValue)
 	}
 
-	@discardableResult func request(_ request: URLRequest, filter: Filter?, completion: @escaping ResultHandler) -> Task? {
+	@discardableResult func request(_ request: URLRequest, filter: Filter?, nocache: Bool, completion: @escaping ResultHandler) -> Task? {
 
 		if let dmy = dummyImage {
 			completion(Result(image: dmy, reason: .memoryCached))
@@ -48,7 +48,7 @@ open class ImageLoader: NSObject {
 		let key = "\(request.url?.absoluteString ?? "")_\(filter?.identifier ?? "")".md5
 		let path = cachePath.appendPath("\(request.url?.absoluteString ?? "")".md5)
 
-		if !disableMemoryCache {
+		if !disableMemoryCache && !nocache {
 			if let img = cache.object(forKey: key as AnyObject) as? UIImage {
 				Bench.memoryhit += 1
 				completion(Result(image: img, reason: .memoryCached))
@@ -60,13 +60,13 @@ open class ImageLoader: NSObject {
 
 		let op = Task(queue: queue, request: request, path: path, filter: filter) { [weak self] result in
 			if let me = self, let uimg = result.image {
-				if !me.disableMemoryCache {
+				if !me.disableMemoryCache && !nocache {
 					me.cache.setObject(uimg, forKey: key as AnyObject)
 				}
 			}
 			Dispatch.doAsMain(isMain) { completion(result) }
 		}
-		op.disableFileCache = disableFileCache
+		op.disableFileCache = disableFileCache || nocache
 		op.debugWaitTime = debugWaitTime
 
 		Dispatch.background { op.start() }
@@ -108,23 +108,23 @@ open class ImageLoader: NSObject {
 public extension ImageLoader {
 
 	// MARK: normal get
-	@discardableResult static func request(_ request: URLRequest, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
-		return shared.request(request, filter: filter, completion: completion)
+	@discardableResult static func request(_ request: URLRequest, filter: Filter? = nil, nocache: Bool, completion: @escaping ResultHandler) -> Task? {
+		return shared.request(request, filter: filter, nocache: nocache, completion: completion)
 	}
 
-	@discardableResult static func get(_ urlstring: String, headers: [String: String]? = nil, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
+	@discardableResult static func get(_ urlstring: String, headers: [String: String]? = nil, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
 		guard let req = HTTP.createRequest(.GET, urlstring, params: nil, headers: headers) else { return nil }
-		return request(req as URLRequest, filter: filter, completion: completion)
+		return request(req as URLRequest, filter: filter, nocache: nocache, completion: completion)
 	}
 
-	@discardableResult static func get(_ url: URL, headers: [String: String]? = nil, filter: Filter? = nil, completion: @escaping ResultHandler) -> Task? {
+	@discardableResult static func get(_ url: URL, headers: [String: String]? = nil, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
 		guard let req = HTTP.createRequest(.GET, url, params: nil, headers: headers) else { return nil }
-		return request(req as URLRequest, filter: filter, completion: completion)
+		return request(req as URLRequest, filter: filter, nocache: nocache, completion: completion)
 	}
 
 	// MARK: sized get
 	@discardableResult static func request(_ request: URLRequest, size: CGSize, completion: @escaping ResultHandler) -> Task? {
-		return shared.request(request, filter: Filter.resizer(size), completion: completion)
+		return shared.request(request, filter: Filter.resizer(size), nocache: false, completion: completion)
 	}
 
 	@discardableResult static func get(_ urls: String, size: CGSize, headers: [String: String]? = nil, completion: @escaping ResultHandler) -> Task? {
@@ -137,7 +137,7 @@ public extension ImageLoader {
 		var r: UIImage?
 		var done = false
 
-		shared.request(request, filter: nil) { r = $0.image; done = true }
+		shared.request(request, filter: nil, nocache: false) { r = $0.image; done = true }
 		while done == false { CFRunLoopRunInMode(CFRunLoopMode.defaultMode, 0.02, false) }
 		return r
 	}

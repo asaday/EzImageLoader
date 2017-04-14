@@ -13,9 +13,9 @@ public extension UIImageView {
 		deinit { task?.cancel() }
 	}
 
-	public func loadRequest(_ request: URLRequest, filter: ImageLoader.Filter? = nil, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
+	public func loadRequest(_ request: URLRequest, filter: ImageLoader.Filter? = nil, nocache: Bool, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
 
-		let task = ImageLoader.shared.request(request, filter: filter) { [weak self] in
+		let task = ImageLoader.shared.request(request, filter: filter, nocache: nocache) { [weak self] in
 			guard let me = self else { return }
 			me.image = $0.image
 			if let h = handler { h(me, $0) }
@@ -25,14 +25,14 @@ public extension UIImageView {
 		setAssociate("imageloadertask", value: ILWTask(task: task))
 	}
 
-	public func loadURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
+	public func loadURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
 		guard let req = HTTP.createRequest(.GET, urlstring, params: nil, headers: headers) else { return }
-		return loadRequest(req, filter: filter, handler: handler)
+		return loadRequest(req, filter: filter, nocache: nocache, handler: handler)
 	}
 
-	public func loadURL(_ url: URL, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
+	public func loadURL(_ url: URL, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
 		guard let req = HTTP.createRequest(.GET, url, params: nil, headers: headers) else { return }
-		return loadRequest(req, filter: filter, handler: handler)
+		return loadRequest(req, filter: filter, nocache: nocache, handler: handler)
 	}
 
 	public func loadFadeinURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil) {
