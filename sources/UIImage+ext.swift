@@ -85,6 +85,14 @@ public extension UIImage {
 		}
 		if images.count == 0 { return nil }
 
-		return UIImage.animatedImage(with: images, duration: 0.5)
+		var duration: TimeInterval = 0.1 * Double(count)
+		if let properties = CGImageSourceCopyProperties(imgSource, nil) as? [AnyHashable: Any],
+			let gp = properties[kCGImagePropertyGIFDictionary as String] as? [AnyHashable: Any],
+			let dt = gp[kCGImagePropertyGIFDelayTime as String] as? String,
+			let d = Double(dt) {
+			duration = d
+		}
+
+		return UIImage.animatedImage(with: images, duration: duration)
 	}
 }
