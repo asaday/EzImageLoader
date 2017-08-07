@@ -108,7 +108,7 @@ open class ImageLoader: NSObject {
 public extension ImageLoader {
 
 	// MARK: normal get
-	@discardableResult static func request(_ request: URLRequest, filter: Filter? = nil, nocache: Bool, completion: @escaping ResultHandler) -> Task? {
+	@discardableResult static func request(_ request: URLRequest, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: filter, nocache: nocache, completion: completion)
 	}
 

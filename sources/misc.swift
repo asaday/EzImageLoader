@@ -3,21 +3,21 @@
 // The MIT License (MIT)
 
 import UIKit
-//import CommonCrypto
+// import CommonCrypto
 
 struct Dispatch {
 
 	// independent
-	static func main(_ block: @escaping () -> ()) {
+	static func main(_ block: @escaping () -> Void) {
 		return DispatchQueue.main.async(execute: block)
 	}
 
-	static func background(_ block: @escaping () -> ()) {
+	static func background(_ block: @escaping () -> Void) {
 		return DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async(execute: block)
 	}
 
 	// can select main or default
-	static func doAsMain(_ isMain: Bool, block: () -> ()) {
+	static func doAsMain(_ isMain: Bool, block: () -> Void) {
 		let queue: DispatchQueue = isMain ? DispatchQueue.main : DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
 		queue.sync(execute: block)
 	}
@@ -39,7 +39,6 @@ struct Dispatch {
 	static func async(_ block: @escaping () -> Void) {
 		CFRunLoopPerformBlock(CFRunLoopGetCurrent(), CFRunLoopMode.commonModes as CFTypeRef!, block)
 	}
-
 }
 
 extension String {
@@ -53,7 +52,7 @@ extension String {
 	func appendPath(_ path: String) -> String {
 		let result = to_ns().appendingPathComponent(path)
 
-		if !self.hasString("://") { return result }
+		if !hasString("://") { return result }
 		guard var c = URLComponents(string: self) else { return result }
 
 		if c.path == "" { c.path = "/" }
@@ -66,7 +65,6 @@ extension String {
 		var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
 		CC_MD5((data as NSData).bytes, CC_LONG(data.count), &hash)
 		return hash.reduce("") { $0 + String(format: "%02X", $1) }
-
 	}
 }
 
