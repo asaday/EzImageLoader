@@ -4,14 +4,12 @@
 
 
 
-#import <WebP/decode.h>
-
+#import <WebPDecoder/decode.h>
 #import "webp.h"
 
 
 // original library
-// https://storage.googleapis.com/downloads.webmproject.org/releases/webp/index.html
-// version  config.h
+// https://developers.google.com/speed/webp/download
 
 
 static void FreeImageData(void *info, const void *data, size_t size)
@@ -61,5 +59,7 @@ UIImage* _Nullable webpConv(NSData* _Nonnull data){
 	UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
 	CGImageRelease(imageRef);
 	
+
+//	UIImage *image = [[UIImage alloc] init];
 	return image;
 }
