@@ -3,8 +3,12 @@
 // The MIT License (MIT)
 
 
+#ifdef TARGET_OS_TV  
+ #import <WebPDecoderTV/decode.h>
+#else
+ #import <WebPDecoder/decode.h>
+#endif
 
-#import <WebPDecoder/decode.h>
 #import "webp.h"
 
 
