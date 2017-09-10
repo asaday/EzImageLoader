@@ -112,14 +112,14 @@ public extension ImageLoader {
 		return shared.request(request, filter: filter, nocache: nocache, completion: completion)
 	}
 
-	@discardableResult static func get(_ urlstring: String, headers: [String: String]? = nil, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
-		guard let req = HTTP.createRequest(.GET, urlstring, params: nil, headers: headers) else { return nil }
-		return request(req as URLRequest, filter: filter, nocache: nocache, completion: completion)
+	@discardableResult static func get(_ url: URL, headers: [String: String]? = nil, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
+		let req = HTTP.shared.createRequest(.GET, url, params: nil, headers: headers)
+		return request(req, filter: filter, nocache: nocache, completion: completion)
 	}
 
-	@discardableResult static func get(_ url: URL, headers: [String: String]? = nil, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
-		guard let req = HTTP.createRequest(.GET, url, params: nil, headers: headers) else { return nil }
-		return request(req as URLRequest, filter: filter, nocache: nocache, completion: completion)
+	@discardableResult static func get(_ urlstring: String, headers: [String: String]? = nil, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
+		guard let url = URL(string: urlstring) else { return nil }
+		return get(url, headers: headers, filter: filter, nocache: nocache, completion: completion)
 	}
 
 	// MARK: sized get
@@ -127,8 +127,9 @@ public extension ImageLoader {
 		return shared.request(request, filter: Filter.resizer(size), nocache: false, completion: completion)
 	}
 
-	@discardableResult static func get(_ urls: String, size: CGSize, headers: [String: String]? = nil, completion: @escaping ResultHandler) -> Task? {
-		guard let req = HTTP.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
+	@discardableResult static func get(_ urlstring: String, size: CGSize, headers: [String: String]? = nil, completion: @escaping ResultHandler) -> Task? {
+		guard let url = URL(string: urlstring) else { return nil }
+		let req = HTTP.shared.createRequest(.GET, url, params: nil, headers: headers)
 		return request(req, size: size, completion: completion)
 	}
 
@@ -142,8 +143,9 @@ public extension ImageLoader {
 		return r
 	}
 
-	static func getASync(_ urls: String, headers: [String: String]? = nil) -> UIImage? {
-		guard let req = HTTP.createRequest(.GET, urls, params: nil, headers: headers) else { return nil }
+	static func getASync(_ urlstring: String, headers: [String: String]? = nil) -> UIImage? {
+		guard let url = URL(string: urlstring) else { return nil }
+		let req = HTTP.shared.createRequest(.GET, url, params: nil, headers: headers)
 		return requestASync(req)
 	}
 

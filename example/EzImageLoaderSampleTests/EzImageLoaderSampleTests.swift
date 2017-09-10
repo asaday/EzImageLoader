@@ -64,8 +64,7 @@ class EzImageLoaderSampleTests: XCTestCase {
 
 	func testGetRequest() {
 		let expectation = self.expectation(description: "")
-		let req = HTTP.createRequest(.GET, src + "/png", params: [:], headers: [:])
-		ImageLoader.request(req!) { res in
+		ImageLoader.get(src + "/png") { res in
 			XCTAssertGreaterThanOrEqual(res.reason.rawValue, 0)
 			XCTAssertNotNil(res.image)
 			expectation.fulfill()

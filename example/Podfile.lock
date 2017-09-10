@@ -1,6 +1,6 @@
 PODS:
   - CocoaAsyncSocket (7.6.1)
-  - EzHTTP (3.1.2):
+  - EzHTTP (3.1.3):
     - CocoaAsyncSocket
   - EzImageLoader (3.1.2):
     - EzHTTP
@@ -11,13 +11,13 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   EzImageLoader:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   CocoaAsyncSocket: 7eadd3f59e1a6c84e2aefc93e9ff7b55156fe174
-  EzHTTP: 66b7d3ff6bc93780ed0cb5dfb7fec3209256458a
+  EzHTTP: 45d031ebe0be54531f46fe9ca4d99e850a29c70a
   EzImageLoader: 873083fca462d5a04ba8cc202b1b0e6ae555ace1
 
 PODFILE CHECKSUM: e7046a98d556e1740f08c0b9d223137196ae3768
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

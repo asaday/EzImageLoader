@@ -26,12 +26,12 @@ public extension UIImageView {
 	}
 
 	public func loadURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
-		guard let req = HTTP.createRequest(.GET, urlstring, params: nil, headers: headers) else { return }
-		return loadRequest(req, filter: filter, nocache: nocache, handler: handler)
+		guard let url = URL(string: urlstring) else { return }
+		loadURL(url, headers: headers, filter: filter, nocache: nocache, handler: handler)
 	}
 
 	public func loadURL(_ url: URL, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
-		guard let req = HTTP.createRequest(.GET, url, params: nil, headers: headers) else { return }
+		let req = HTTP.shared.createRequest(.GET, url, params: nil, headers: headers)
 		return loadRequest(req, filter: filter, nocache: nocache, handler: handler)
 	}
 
