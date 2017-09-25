@@ -13,7 +13,9 @@ open class ImageLoader: NSObject {
 	open let queue = OperationQueue() // for decode task
 	open var cachePath: String = Path.caches("images")
 
-	open var fileCacheLifeTime: TimeInterval = 86400 * 3
+	open var fileCacheLifeTime: TimeInterval = 86400 * 3 // 3Days
+	open var fileCacheMaxSize: Int64 = 1024 * 1024 * 1024 // 1GB
+
 	open var disableMemoryCache: Bool = false
 	open var disableFileCache: Bool = false
 	open var debugWaitTime: TimeInterval = 0
@@ -29,10 +31,10 @@ open class ImageLoader: NSObject {
 		super.init()
 
 		queue.maxConcurrentOperationCount = 4
-		cache.totalCostLimit = 1024 * 1024 // KB
+		cache.totalCostLimit = 1024 * 1024 // 1MB
 		cache.countLimit = 200
+		Path.mkdir(cachePath)
 
-		cleanCache()
 		addNotification(#selector(cleanCache), name: Notification.Name.UIApplicationDidEnterBackground.rawValue)
 	}
 
@@ -43,14 +45,11 @@ open class ImageLoader: NSObject {
 			return nil
 		}
 
-		Bench.show += 1
-
 		let key = "\(request.url?.absoluteString ?? "")_\(filter?.identifier ?? "")".md5
 		let path = cachePath.appendPath("\(request.url?.absoluteString ?? "")".md5)
 
 		if !disableMemoryCache && !nocache {
 			if let img = cache.object(forKey: key as AnyObject) as? UIImage {
-				Bench.memoryhit += 1
 				completion(Result(image: img, reason: .memoryCached))
 				return nil
 			}
@@ -78,21 +77,40 @@ open class ImageLoader: NSObject {
 	// called in applicationDidEnterBackground
 	func cleanCache() {
 		let now = Date()
+		cache.removeAllObjects()
 
 		Path.mkdir(cachePath)
 		let files = Path.files(cachePath)
 
+		var list: [(String, TimeInterval, Int64)] = []
+		var sumSize: Int64 = 0
+
+		// remove by life time
 		for file in files {
 			let path = cachePath.appendPath(file)
 			let atb = Path.attributes(path)
 
-			if let dt = atb[FileAttributeKey.creationDate] as? Date {
-				if now.timeIntervalSince(dt) > fileCacheLifeTime {
+			if let dt = atb[FileAttributeKey.creationDate] as? Date, let sz = (atb[FileAttributeKey.size] as? NSNumber)?.int64Value {
+				let t = now.timeIntervalSince(dt)
+				if fileCacheLifeTime > 0 && t > fileCacheLifeTime {
 					Path.remove(path)
+				} else {
+					sumSize += sz
+					list.append((path, t, sz))
 				}
 			}
 		}
-		cache.removeAllObjects()
+
+		if fileCacheMaxSize > 0 && sumSize < fileCacheMaxSize { return }
+
+		// remove by max size
+		list.sort { $0.1 > $1.1 }
+		for v in list {
+			Path.remove(v.0)
+			sumSize = sumSize - v.2
+			if sumSize < fileCacheMaxSize { break }
+			list.removeFirst()
+		}
 	}
 
 	// clear all cache and tasks
@@ -226,32 +244,6 @@ extension ImageLoader {
 	}
 }
 
-// MARK: - bench
-public extension ImageLoader {
-
-	struct Bench {
-		public static var show: Int = 0
-		public static var memoryhit: Int = 0
-		public static var filehit: Int = 0
-		public static var download: Int = 0
-		public static var downtime: TimeInterval = 0
-		public static var downsize: Int = 0
-		public static var decoded: Int = 0
-		public static var decodetime: TimeInterval = 0
-
-		public static func clear() {
-			show = 0
-			memoryhit = 0
-			filehit = 0
-			download = 0
-			downtime = 0
-			downsize = 0
-			decoded = 0
-			decodetime = 0
-		}
-	}
-}
-
 // MARK: - task
 public extension ImageLoader {
 	typealias ResultHandler = ((_ result: Result) -> Void)
@@ -291,7 +283,6 @@ public extension ImageLoader {
 				download()
 				return
 			}
-			Bench.filehit += 1
 
 			// image decode
 			let deop = BlockOperation {
@@ -315,14 +306,12 @@ public extension ImageLoader {
 
 		func download() {
 			startTime = Date()
-			Bench.download += 1
 
 			let dlop = HTTP.request(request) {
 				self.downTask = nil
 				if self.cancelled { return }
 
 				self.downloadTime = self.startTime.lapTime
-				Bench.downtime += self.downloadTime
 
 				if let error = $0.error {
 					if error.code == NSURLErrorNetworkConnectionLost { // include NSURLErrorCancelled , disconnect = -1009 NSURLErrorNotConnectedToInternet
@@ -348,8 +337,6 @@ public extension ImageLoader {
 					self.completion = nil
 					return
 				}
-
-				Bench.downsize += data.count
 
 				// image decode
 				let deop = BlockOperation {
@@ -390,9 +377,6 @@ public extension ImageLoader {
 				rimg = UIImage.decode(data, memorized: true)
 			}
 			decodeTime = startTime.lapTime
-
-			Bench.decodetime += decodeTime
-			Bench.decoded += 1
 
 			if debugWaitTime > 0 { Thread.sleep(forTimeInterval: debugWaitTime) }
 
