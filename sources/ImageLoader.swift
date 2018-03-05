@@ -75,7 +75,7 @@ open class ImageLoader: NSObject {
 	}
 
 	// called in applicationDidEnterBackground
-	func cleanCache() {
+	@objc func cleanCache() {
 		let now = Date()
 		cache.removeAllObjects()
 
