@@ -37,7 +37,7 @@ struct Dispatch {
 	}
 
 	static func async(_ block: @escaping () -> Void) {
-		CFRunLoopPerformBlock(CFRunLoopGetCurrent(), CFRunLoopMode.commonModes as CFTypeRef!, block)
+		CFRunLoopPerformBlock(CFRunLoopGetCurrent(), CFRunLoopMode.commonModes as CFTypeRef, block)
 	}
 }
 
