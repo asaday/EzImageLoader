@@ -2,11 +2,10 @@
 // Copyright (c) NagisaWorks asaday
 // The MIT License (MIT)
 
-import UIKit
 import EzHTTP
+import UIKit
 
 public extension UIImageView {
-
 	class ILWTask: NSObject {
 		let task: ImageLoader.Task?
 		init(task: ImageLoader.Task?) { self.task = task }
@@ -14,7 +13,6 @@ public extension UIImageView {
 	}
 
 	public func loadRequest(_ request: URLRequest, filter: ImageLoader.Filter? = nil, nocache: Bool, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
-
 		let task = ImageLoader.shared.request(request, filter: filter, nocache: nocache) { [weak self] in
 			guard let me = self else { return }
 			me.image = $0.image

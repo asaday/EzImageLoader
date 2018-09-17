@@ -6,7 +6,6 @@ import UIKit
 // import CommonCrypto
 
 struct Dispatch {
-
 	// independent
 	static func main(_ block: @escaping () -> Void) {
 		return DispatchQueue.main.async(execute: block)
@@ -69,7 +68,6 @@ extension String {
 }
 
 extension NSObject {
-
 	func removeNotifications() {
 		NSObject.cancelPreviousPerformRequests(withTarget: self)
 		NotificationCenter.default.removeObserver(self)
@@ -95,7 +93,6 @@ extension NSObject {
 }
 
 extension Date {
-
 	var lapTime: TimeInterval { return -timeIntervalSince(Date()) }
 }
 

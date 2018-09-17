@@ -2,12 +2,11 @@
 // Copyright (c) NagisaWorks asaday
 // The MIT License (MIT)
 
-import XCTest
 import EzHTTP
 import EzImageLoader
+import XCTest
 
 class EzImageLoaderSampleTests: XCTestCase {
-
 	var src = "https://httpbin.org/image"
 
 	override func setUp() {

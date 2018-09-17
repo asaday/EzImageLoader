@@ -2,15 +2,14 @@
 // Copyright (c) NagisaWorks asaday
 // The MIT License (MIT)
 
-import UIKit
 import EzHTTP
+import UIKit
 
 open class ImageLoader: NSObject {
+	public static let shared = ImageLoader()
 
-	open static let shared = ImageLoader()
-
-	open let cache: NSCache = NNCache()
-	open let queue = OperationQueue() // for decode task
+	public let cache: NSCache = NNCache()
+	public let queue = OperationQueue() // for decode task
 	open var cachePath: String = Path.caches("images")
 
 	open var fileCacheLifeTime: TimeInterval = 86400 * 3 // 3Days
@@ -39,7 +38,6 @@ open class ImageLoader: NSObject {
 	}
 
 	@discardableResult func request(_ request: URLRequest, filter: Filter?, nocache: Bool, completion: @escaping ResultHandler) -> Task? {
-
 		if let dmy = dummyImage {
 			completion(Result(image: dmy, reason: .memoryCached))
 			return nil
@@ -123,9 +121,10 @@ open class ImageLoader: NSObject {
 }
 
 // MARK: - static functions
-public extension ImageLoader {
 
+public extension ImageLoader {
 	// MARK: normal get
+
 	@discardableResult static func request(_ request: URLRequest, filter: Filter? = nil, nocache: Bool = false, completion: @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: filter, nocache: nocache, completion: completion)
 	}
@@ -141,6 +140,7 @@ public extension ImageLoader {
 	}
 
 	// MARK: sized get
+
 	@discardableResult static func request(_ request: URLRequest, size: CGSize, completion: @escaping ResultHandler) -> Task? {
 		return shared.request(request, filter: Filter.resizer(size), nocache: false, completion: completion)
 	}
@@ -152,6 +152,7 @@ public extension ImageLoader {
 	}
 
 	// MARK: async get (dont call in main task)
+
 	@discardableResult static func requestASync(_ request: URLRequest) -> UIImage? {
 		var r: UIImage?
 		var done = false
@@ -173,6 +174,7 @@ public extension ImageLoader {
 }
 
 // MARK: - result
+
 public extension ImageLoader {
 	public enum ResultReason: Int {
 		case cancelled = -100 // do not callback
@@ -205,6 +207,7 @@ public extension ImageLoader {
 }
 
 // MARK: - filter
+
 public extension ImageLoader {
 	public struct Filter {
 		public let identifier: String // for chache identifier
@@ -230,8 +233,8 @@ public extension ImageLoader {
 }
 
 // MARK: - cache
-extension ImageLoader {
 
+extension ImageLoader {
 	class NNCache: NSCache<AnyObject, AnyObject> {
 		deinit {
 			removeNotifications()
@@ -245,6 +248,7 @@ extension ImageLoader {
 }
 
 // MARK: - task
+
 public extension ImageLoader {
 	typealias ResultHandler = ((_ result: Result) -> Void)
 	typealias DecryptHandler = ((_ data: Data?) -> Data?)

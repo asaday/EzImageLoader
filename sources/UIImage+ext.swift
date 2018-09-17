@@ -2,12 +2,11 @@
 // Copyright (c) NagisaWorks asaday
 // The MIT License (MIT)
 
-import UIKit
 import ImageIO
+import UIKit
 // import webp
 
 public extension UIImage {
-
 	public func resize(_ size: CGSize, fill: Bool = true) -> UIImage {
 		if size.width <= 0 || size.height <= 0 || size.width <= 0 || size.height <= 0 { return self }
 
