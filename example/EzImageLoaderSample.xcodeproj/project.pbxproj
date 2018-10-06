@@ -183,14 +183,14 @@
 					C31DBBCB1DBA11B4009BC34B = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 5E2LE3SXM6;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C36D955D1D4069FD00F0CE31;
 					};
 					C36D955D1D4069FD00F0CE31 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 5E2LE3SXM6;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -374,8 +374,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoaderSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EzImageLoaderSample.app/EzImageLoaderSample";
 			};
 			name = Debug;
@@ -393,8 +392,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoaderSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EzImageLoaderSample.app/EzImageLoaderSample";
 			};
 			name = Release;
@@ -523,8 +521,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.sample;
 				PRODUCT_NAME = EzImageLoaderSample;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -544,8 +541,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.sample;
 				PRODUCT_NAME = EzImageLoaderSample;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

@@ -73,8 +73,8 @@ extension NSObject {
 		NotificationCenter.default.removeObserver(self)
 	}
 
-	func addNotification(_ aSelector: Selector, name aName: String) {
-		NotificationCenter.default.addObserver(self, selector: aSelector, name: NSNotification.Name(rawValue: aName), object: nil)
+	func addNotification(_ aSelector: Selector, name: Notification.Name) {
+		NotificationCenter.default.addObserver(self, selector: aSelector, name: name, object: nil)
 	}
 
 	// black magic

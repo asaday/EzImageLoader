@@ -34,7 +34,7 @@ open class ImageLoader: NSObject {
 		cache.countLimit = 200
 		Path.mkdir(cachePath)
 
-		addNotification(#selector(cleanCache), name: Notification.Name.UIApplicationDidEnterBackground.rawValue)
+		addNotification(#selector(cleanCache), name: UIApplication.didEnterBackgroundNotification)
 	}
 
 	@discardableResult func request(_ request: URLRequest, filter: Filter?, nocache: Bool, completion: @escaping ResultHandler) -> Task? {
@@ -242,7 +242,7 @@ extension ImageLoader {
 
 		override init() {
 			super.init()
-			addNotification(#selector(removeAllObjects), name: Notification.Name.UIApplicationDidReceiveMemoryWarning.rawValue)
+			addNotification(#selector(removeAllObjects), name: UIApplication.didReceiveMemoryWarningNotification)
 		}
 	}
 }
