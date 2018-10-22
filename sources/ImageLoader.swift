@@ -347,10 +347,10 @@ public extension ImageLoader {
 					self.decodeTask = nil
 					if self.cancelled { return }
 
+					(data as NSData).write(toFile: self.path, atomically: true)
 					var decodeTime: TimeInterval = 0
 					if let img = self.decodeImage(data, decodeTime: &decodeTime) {
 						self.completion?(Result(image: img, reason: .downloaded, decodeTime: decodeTime, downloadTime: self.downloadTime))
-						(data as NSData).write(toFile: self.path, atomically: true)
 					} else {
 						self.completion?(.failed(.decodeFailed))
 					}
