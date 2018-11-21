@@ -83,28 +83,39 @@ public extension UIImage {
 		return (memcmp(ptr, pngHeader, pngHeader.count) == 0) && (memcmp(ptr + 33, actlHeader, actlHeader.count) == 0)
 	}
 
-	static func readMultiImage(_ source: CGImageSource) -> [UIImage] {
-		var images: [UIImage] = []
-		let count = CGImageSourceGetCount(source)
-		for i in 0 ..< count {
-			if let ref: CGImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
-				images.append(UIImage(cgImage: ref))
-			}
-		}
-		return images
-	}
-
 	static func imageWithGIF(data: Data) -> UIImage? {
 		guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
-		let images = readMultiImage(source)
+		var images: [UIImage] = []
+		let count = CGImageSourceGetCount(source)
+
+		var duration: TimeInterval = 0
+
+		for i in 0 ..< count {
+			guard let ref: CGImage = CGImageSourceCreateImageAtIndex(source, i, nil) else { continue }
+			images.append(UIImage(cgImage: ref))
+
+			if let properties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [AnyHashable: Any],
+				let gp = properties[kCGImagePropertyGIFDictionary] as? [AnyHashable: Any] {
+				if let p = gp[kCGImagePropertyGIFUnclampedDelayTime] as? NSNumber {
+					duration += p.doubleValue
+				} else if let p = gp[kCGImagePropertyGIFDelayTime] as? NSNumber {
+					duration += p.doubleValue
+				}
+			}
+		}
+
 		if images.count == 0 { return nil }
 
-		var duration: TimeInterval = 0.1 * Double(images.count)
-		if let properties = CGImageSourceCopyProperties(source, nil) as? [AnyHashable: Any],
-			let gp = properties[kCGImagePropertyGIFDictionary as String] as? [AnyHashable: Any],
-			let dt = gp[kCGImagePropertyGIFDelayTime as String] as? String,
-			let d = Double(dt) {
-			duration = d
+		if duration == 0 {
+			if let properties = CGImageSourceCopyProperties(source, nil) as? [AnyHashable: Any],
+				let gp = properties[kCGImagePropertyGIFDictionary] as? [AnyHashable: Any],
+				let p = gp[kCGImagePropertyGIFDelayTime] as? NSNumber {
+				duration = p.doubleValue
+			}
+		}
+
+		if duration == 0 {
+			duration = 0.1 * Double(images.count)
 		}
 
 		return UIImage.animatedImage(with: images, duration: duration)
@@ -113,7 +124,13 @@ public extension UIImage {
 	static func imageWithAPNG(data: Data) -> UIImage? {
 		// CGImageSourceCreateImageAtIndex suuport APNG from iOS ver ??? (9? 8? 7?)
 		guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
-		let images = readMultiImage(source)
+
+		var images: [UIImage] = []
+		let count = CGImageSourceGetCount(source)
+		for i in 0 ..< count {
+			guard let ref: CGImage = CGImageSourceCreateImageAtIndex(source, i, nil) else { continue }
+			images.append(UIImage(cgImage: ref))
+		}
 		if images.count == 0 { return nil }
 
 		var duration: TimeInterval = 0.1 * Double(images.count)

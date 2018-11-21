@@ -14,7 +14,8 @@
 		C3792EF21D4D190F00B08DEA /* UIImageView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3792EE31D4D190F00B08DEA /* UIImageView+ext.swift */; };
 		C3792EF31D4D190F00B08DEA /* webp.h in Headers */ = {isa = PBXBuildFile; fileRef = C3792EE41D4D190F00B08DEA /* webp.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C3792EF41D4D190F00B08DEA /* webp.m in Sources */ = {isa = PBXBuildFile; fileRef = C3792EE51D4D190F00B08DEA /* webp.m */; };
-		C3792EF71D4D191B00B08DEA /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3792EF61D4D191B00B08DEA /* WebP.framework */; };
+		C3A899DC2195E98B00025C87 /* WebPDecoder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A899DB2195E98B00025C87 /* WebPDecoder.framework */; };
+		C3A899DE2195E9C900025C87 /* EzHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A899DD2195E9C900025C87 /* EzHTTP.framework */; };
 		C3A9DDD81D578E70005DFAE8 /* CommonCrypto_re.h in Headers */ = {isa = PBXBuildFile; fileRef = C3A9DDD71D578E70005DFAE8 /* CommonCrypto_re.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C3A9DDE31D5C9972005DFAE8 /* EzHTTP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A9DDE21D5C9972005DFAE8 /* EzHTTP.framework */; };
 /* End PBXBuildFile section */
@@ -29,7 +30,8 @@
 		C3792EE31D4D190F00B08DEA /* UIImageView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ext.swift"; sourceTree = "<group>"; };
 		C3792EE41D4D190F00B08DEA /* webp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webp.h; sourceTree = "<group>"; };
 		C3792EE51D4D190F00B08DEA /* webp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = webp.m; sourceTree = "<group>"; };
-		C3792EF61D4D191B00B08DEA /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
+		C3A899DB2195E98B00025C87 /* WebPDecoder.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebPDecoder.framework; sourceTree = "<group>"; };
+		C3A899DD2195E9C900025C87 /* EzHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EzHTTP.framework; path = Carthage/Build/iOS/EzHTTP.framework; sourceTree = SOURCE_ROOT; };
 		C3A9DDD71D578E70005DFAE8 /* CommonCrypto_re.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonCrypto_re.h; sourceTree = "<group>"; };
 		C3A9DDDA1D578F53005DFAE8 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		C3A9DDE21D5C9972005DFAE8 /* EzHTTP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EzHTTP.framework; path = sample/Carthage/Build/iOS/EzHTTP.framework; sourceTree = "<group>"; };
@@ -40,8 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3792EF71D4D191B00B08DEA /* WebP.framework in Frameworks */,
+				C3A899DE2195E9C900025C87 /* EzHTTP.framework in Frameworks */,
 				C3A9DDE31D5C9972005DFAE8 /* EzHTTP.framework in Frameworks */,
+				C3A899DC2195E98B00025C87 /* WebPDecoder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,7 +97,8 @@
 		C3792EF51D4D191B00B08DEA /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C3792EF61D4D191B00B08DEA /* WebP.framework */,
+				C3A899DD2195E9C900025C87 /* EzHTTP.framework */,
+				C3A899DB2195E98B00025C87 /* WebPDecoder.framework */,
 			);
 			path = frameworks;
 			sourceTree = "<group>";
@@ -139,7 +143,7 @@
 		C3792EC11D4D18C200B08DEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = asada;
 				TargetAttributes = {
 					C3792EC91D4D18C200B08DEA = {
@@ -200,13 +204,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -249,13 +263,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -275,6 +299,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -285,6 +310,7 @@
 		C3792ED31D4D18C200B08DEA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -292,9 +318,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
-					"$(PROJECT_DIR)/sample",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/sample/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -303,13 +328,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		C3792ED41D4D18C200B08DEA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -317,9 +343,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/frameworks",
-					"$(PROJECT_DIR)/sample",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/sample/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -328,7 +353,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
