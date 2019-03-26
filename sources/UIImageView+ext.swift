@@ -12,7 +12,7 @@ public extension UIImageView {
 		deinit { task?.cancel() }
 	}
 
-	public func loadRequest(_ request: URLRequest, filter: ImageLoader.Filter? = nil, nocache: Bool, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
+	func loadRequest(_ request: URLRequest, filter: ImageLoader.Filter? = nil, nocache: Bool, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
 		let task = ImageLoader.shared.request(request, filter: filter, nocache: nocache) { [weak self] in
 			guard let me = self else { return }
 			me.image = $0.image
@@ -30,25 +30,25 @@ public extension UIImageView {
 		setAssociate("imageloadertask", value: ILWTask(task: task))
 	}
 
-	public func loadURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
+	func loadURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
 		guard let url = URL(string: urlstring) else { return }
 		loadURL(url, headers: headers, filter: filter, nocache: nocache, handler: handler)
 	}
 
-	public func loadURL(_ url: URL, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
+	func loadURL(_ url: URL, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil, nocache: Bool = false, handler: ((_ imageView: UIImageView, _ result: ImageLoader.Result) -> Void)? = nil) {
 		let req = HTTP.shared.createRequest(.GET, url, params: nil, headers: headers)
 		return loadRequest(req, filter: filter, nocache: nocache, handler: handler)
 	}
 
-	public func loadFadeinURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil) {
+	func loadFadeinURL(_ urlstring: String, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil) {
 		loadURL(urlstring, headers: headers, filter: filter, handler: UIImageView.fadeinHandler)
 	}
 
-	public func loadFadeinURL(_ url: URL, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil) {
+	func loadFadeinURL(_ url: URL, headers: [String: String]? = nil, filter: ImageLoader.Filter? = nil) {
 		loadURL(url, headers: headers, filter: filter, handler: UIImageView.fadeinHandler)
 	}
 
-	public static func fadeinHandler(_ imageView: UIImageView, _ result: ImageLoader.Result) {
+	static func fadeinHandler(_ imageView: UIImageView, _ result: ImageLoader.Result) {
 		if result.reason != .downloaded { return }
 		imageView.alpha = 0
 		UIView.animate(withDuration: 0.3) { imageView.alpha = 1 }

@@ -177,26 +177,26 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = asada;
 				TargetAttributes = {
 					C31DBBCB1DBA11B4009BC34B = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 5E2LE3SXM6;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C36D955D1D4069FD00F0CE31;
 					};
 					C36D955D1D4069FD00F0CE31 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 5E2LE3SXM6;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = C36D95591D4069FD00F0CE31 /* Build configuration list for PBXProject "EzImageLoaderSample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -258,7 +258,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-EzImageLoaderSample/Pods-EzImageLoaderSample-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-EzImageLoaderSample/Pods-EzImageLoaderSample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/EzHTTP/EzHTTP.framework",
 				"${BUILT_PRODUCTS_DIR}/EzImageLoader/EzImageLoader.framework",
 			);
@@ -269,7 +269,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EzImageLoaderSample/Pods-EzImageLoaderSample-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EzImageLoaderSample/Pods-EzImageLoaderSample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		93297E9F773FE5C5461AE3AA /* [CP] Check Pods Manifest.lock */ = {
@@ -296,7 +296,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/EzHTTP/EzHTTP.framework",
 				"${BUILT_PRODUCTS_DIR}/EzImageLoader/EzImageLoader.framework",
 			);
@@ -307,7 +307,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EzImageLoaderSampleTests/Pods-EzImageLoaderSampleTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -374,7 +374,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoaderSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EzImageLoaderSample.app/EzImageLoaderSample";
 			};
 			name = Debug;
@@ -392,7 +392,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.EzImageLoaderSampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EzImageLoaderSample.app/EzImageLoaderSample";
 			};
 			name = Release;
@@ -401,6 +401,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -458,6 +459,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -521,7 +523,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.sample;
 				PRODUCT_NAME = EzImageLoaderSample;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -541,7 +543,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nagisa.sample;
 				PRODUCT_NAME = EzImageLoaderSample;
 				SWIFT_INCLUDE_PATHS = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "EzImageLoader"
-s.version      = "3.3.3"
+s.version      = "3.4.1"
 s.summary      = "image loader"
 
 s.homepage     = "http://nagisaworks.com"

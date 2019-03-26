@@ -176,7 +176,7 @@ public extension ImageLoader {
 // MARK: - result
 
 public extension ImageLoader {
-	public enum ResultReason: Int {
+	enum ResultReason: Int {
 		case cancelled = -100 // do not callback
 		case decodeFailed
 		case downloadFailed
@@ -187,7 +187,7 @@ public extension ImageLoader {
 		case downloaded = 2
 	}
 
-	public struct Result {
+	struct Result {
 		public let image: UIImage?
 		public let reason: ResultReason
 		public let decodeTime: TimeInterval
@@ -209,7 +209,7 @@ public extension ImageLoader {
 // MARK: - filter
 
 public extension ImageLoader {
-	public struct Filter {
+	struct Filter {
 		public let identifier: String // for chache identifier
 		public var param: [String: Any] = [:]
 		public var dataConverter: ((_ data: Data, _ param: [String: Any]) -> Data?)?

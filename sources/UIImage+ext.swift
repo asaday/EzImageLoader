@@ -7,7 +7,7 @@ import UIKit
 // import webp
 
 public extension UIImage {
-	public func resize(_ size: CGSize, fill: Bool = true) -> UIImage {
+	func resize(_ size: CGSize, fill: Bool = true) -> UIImage {
 		if size.width <= 0 || size.height <= 0 || size.width <= 0 || size.height <= 0 { return self }
 
 		let xz = size.width / size.width
@@ -29,7 +29,7 @@ public extension UIImage {
 		return ret ?? UIImage()
 	}
 
-	public static func decode(_ data: Data, memorized: Bool = true) -> UIImage? {
+	static func decode(_ data: Data, memorized: Bool = true) -> UIImage? {
 		if isWebpFormat(data) {
 			return webpConv(data)
 		}
