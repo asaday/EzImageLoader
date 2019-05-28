@@ -16,7 +16,7 @@ public extension UIImageView {
 		let task = ImageLoader.shared.request(request, filter: filter, nocache: nocache) { [weak self] in
 			guard let me = self else { return }
 			me.image = $0.image
-			
+
 			if let img = $0.image, let imgs = img.images {
 				me.animationImages = imgs
 				me.animationDuration = img.duration

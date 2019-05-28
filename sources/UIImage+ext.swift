@@ -133,31 +133,45 @@ public extension UIImage {
 		}
 		if images.count == 0 { return nil }
 
-		var duration: TimeInterval = 0.1 * Double(images.count)
-
-		// read first frame duration
-		let ptr = (data as NSData).bytes
-		if data.count > 128 {
-			let fctL: [UInt8] = [0x66, 0x63, 0x54, 0x4C] // fcTL
-			if memcmp(ptr + 57, fctL, fctL.count) == 0 {
-				// 8(PNG) + 25(IHDR) + 20(acTL) + 4(fcTL length) + 4(fcTL name)
-				var vals: [UInt8] = [0, 0, 0, 0]
-				for i in 0 ..< 4 { vals[i] = ptr.load(fromByteOffset: 61 + 20 + i, as: UInt8.self) }
-				let dn = Int(vals[0]) * 256 + Int(vals[1])
-				let dd = Int(vals[2]) * 256 + Int(vals[3])
-				if dn > 0 && dd > 0 && dn < dd {
-					duration = Double(dn) / Double(dd) * Double(images.count)
-				}
-			}
-		}
-
 		if let properties = CGImageSourceCopyProperties(source, nil) as? [AnyHashable: Any],
 			let gp = properties[kCGImagePropertyPNGDictionary as String] as? [AnyHashable: Any],
 			let dt = gp[kCGImagePropertyAPNGDelayTime as String] as? String,
 			let d = Double(dt) { // may be not
-			duration = d
+			return UIImage.animatedImage(with: images, duration: d)
 		}
 
-		return UIImage.animatedImage(with: images, duration: duration)
+		var duration: TimeInterval = 0
+		var delays: [TimeInterval] = []
+		var p: Int = 8
+		while p + 8 < data.count {
+			let len = UInt32(data[p + 0]) << 24 + UInt32(data[p + 1]) << 16 + UInt32(data[p + 2]) << 8 + UInt32(data[p + 3])
+			let key = UInt32(data[p + 4]) << 24 + UInt32(data[p + 5]) << 16 + UInt32(data[p + 6]) << 8 + UInt32(data[p + 7])
+			p = p + 8
+
+			if key == 0x6663_544C { // fcTL
+				let delay_num = UInt32(data[p + 20]) << 8 + UInt32(data[p + 21])
+				let delay_den = UInt32(data[p + 22]) << 8 + UInt32(data[p + 23])
+				let delay = TimeInterval(delay_num) / TimeInterval(delay_den)
+				duration += delay
+				delays.append(delay)
+				// print("\(delay) \(delay_num) \(delay_den)")
+			}
+			p = p + Int(len) + 4
+		}
+
+		// no anime data
+		if delays.count == 0 || delays.count != images.count {
+			return UIImage.animatedImage(with: images, duration: 0.1 * Double(images.count)) // as default
+		}
+
+		// uiimage cant set each frame duration, so append frame as duration
+		let min = delays.min() ?? delays[0]
+		var nimgs: [UIImage] = []
+		for (idx, d) in delays.enumerated() {
+			let cnt = Int(d / min)
+			for _ in 0 ..< cnt { nimgs.append(images[idx]) }
+		}
+		// print("frames \(images.count) to \(nimgs.count) frame duration \(min) total duration \(duration)")
+		return UIImage.animatedImage(with: nimgs, duration: duration)
 	}
 }
