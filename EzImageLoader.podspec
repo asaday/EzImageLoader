@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "EzImageLoader"
-s.version      = "3.4.2"
+s.version      = "3.4.3"
 s.summary      = "image loader"
 
 s.homepage     = "http://nagisaworks.com"
@@ -16,10 +16,7 @@ s.source       = { :git=> "https://github.com/asaday/EzImageLoader.git", :tag =>
 s.source_files  = "sources/**/*.{swift,h,m}"
 s.ios.vendored_frameworks = 'frameworks/WebPDecoder.framework'
 s.tvos.vendored_frameworks = 'frameworks/WebPDecoderTV.framework'
-s.requires_arc = true
 
 s.dependency  'EzHTTP'
-s.module_map = 'resources/module.modulemap'
-s.private_header_files = 'sources/webp.h','sources/CommonCrypto_re.h'
 
 end

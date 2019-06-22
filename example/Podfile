@@ -1,15 +1,15 @@
 
 platform :ios, '8.0'
-use_frameworks!
+#use_frameworks!
 
 target 'EzImageLoaderSample' do
-	pod 'EzHTTP'
-	pod 'EzImageLoader' ,:path => '../'
+  pod 'EzHTTP'
+  pod 'EzImageLoader' ,:path => '../'
 end
 
 target 'EzImageLoaderSampleTests' do
-	pod 'EzHTTP'
-	pod 'EzImageLoader' ,:path => '../'
+  pod 'EzHTTP'
+  pod 'EzImageLoader' ,:path => '../'
 end
 
 

@@ -1,14 +1,18 @@
+//
+//  ViewController.swift
+//  EzImageLoaderSample
+//
+//  Created by asada on 2019/06/22.
+//  Copyright © 2019 asada. All rights reserved.
+//
 
-// Copyright (c) NagisaWorks asaday
-// The MIT License (MIT)
-
+import EzHTTP
 import EzImageLoader
 import UIKit
 
 class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
 		let iv1 = UIImageView(frame: CGRect(x: 0, y: 30, width: 200, height: 200))
 		view.addSubview(iv1)
 		iv1.contentMode = .scaleAspectFit

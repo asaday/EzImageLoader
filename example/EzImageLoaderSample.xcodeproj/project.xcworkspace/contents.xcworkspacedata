@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/asada/Dropbox/clone/EzImageLoader/sample/EzImageLoaderSample.xcodeproj">
+      location = "self:EzImageLoaderSample.xcodeproj">
    </FileRef>
 </Workspace>

@@ -57,7 +57,7 @@ open class ImageLoader: NSObject {
 
 		let op = Task(queue: queue, request: request, path: path, filter: filter) { [weak self] result in
 			if let me = self, let uimg = result.image {
-				if !me.disableMemoryCache && !nocache {
+				if !me.disableMemoryCache, !nocache {
 					me.cache.setObject(uimg, forKey: key as AnyObject)
 				}
 			}
@@ -90,7 +90,7 @@ open class ImageLoader: NSObject {
 
 			if let dt = atb[FileAttributeKey.creationDate] as? Date, let sz = (atb[FileAttributeKey.size] as? NSNumber)?.int64Value {
 				let t = now.timeIntervalSince(dt)
-				if fileCacheLifeTime > 0 && t > fileCacheLifeTime {
+				if fileCacheLifeTime > 0, t > fileCacheLifeTime {
 					Path.remove(path)
 				} else {
 					sumSize += sz
@@ -99,7 +99,7 @@ open class ImageLoader: NSObject {
 			}
 		}
 
-		if fileCacheMaxSize > 0 && sumSize < fileCacheMaxSize { return }
+		if fileCacheMaxSize > 0, sumSize < fileCacheMaxSize { return }
 
 		// remove by max size
 		list.sort { $0.1 > $1.1 }
