@@ -8,7 +8,7 @@ import UIKit
 open class ImageLoader: NSObject {
 	public static let shared = ImageLoader()
 
-	public let cache: NSCache = NNCache()
+    public let cache = ImageLoaderCache()
 	public let queue = OperationQueue() // for decode task
 	open var cachePath: String = Path.caches("images")
 
@@ -22,9 +22,7 @@ open class ImageLoader: NSObject {
 	open var dummyImage: UIImage?
 	open var dummyWait: TimeInterval = 0
 
-	deinit {
-		removeNotifications()
-	}
+	deinit { removeNotifications() }
 
 	public override init() {
 		super.init()
@@ -47,7 +45,7 @@ open class ImageLoader: NSObject {
 		let path = cachePath.appendPath("\(request.url?.absoluteString ?? "")".md5)
 
 		if !disableMemoryCache && !nocache {
-			if let img = cache.object(forKey: key as AnyObject) as? UIImage {
+            if let img = cache.object(forKey: key as NSString)  {
 				completion(Result(image: img, reason: .memoryCached))
 				return nil
 			}
@@ -58,7 +56,7 @@ open class ImageLoader: NSObject {
 		let op = Task(queue: queue, request: request, path: path, filter: filter) { [weak self] result in
 			if let me = self, let uimg = result.image {
 				if !me.disableMemoryCache, !nocache {
-					me.cache.setObject(uimg, forKey: key as AnyObject)
+					me.cache.setObject(uimg, forKey: key as NSString)
 				}
 			}
 			Dispatch.doAsMain(isMain) { completion(result) }
@@ -234,17 +232,28 @@ public extension ImageLoader {
 
 // MARK: - cache
 
-extension ImageLoader {
-	class NNCache: NSCache<AnyObject, AnyObject> {
-		deinit {
-			removeNotifications()
-		}
+public class ImageLoaderCache: NSCache<NSString,UIImage> {
+		
+    let lock = NSLock()
+    
+    deinit { removeNotifications() }
 
 		override init() {
 			super.init()
 			addNotification(#selector(removeAllObjects), name: UIApplication.didReceiveMemoryWarningNotification)
 		}
+    
+    override public func setObject(_ obj: UIImage, forKey key: NSString) {
+        lock.lock()
+        super.setObject(obj, forKey: key)
+        lock.unlock()
 	}
+    
+    override public func removeAllObjects() {
+        lock.lock()
+        super.removeAllObjects()
+        lock.unlock()
+    }
 }
 
 // MARK: - task
