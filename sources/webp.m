@@ -6,7 +6,8 @@
 #if TARGET_OS_TV  
  #import <WebPDecoderTV/decode.h>
 #else
- #import <WebPDecoder/decode.h>
+ #import <WebPDemux/decode.h>
+ #import <WebPDemux/demux.h>
 #endif
 
 #import "webp.h"
@@ -16,54 +17,58 @@
 // https://developers.google.com/speed/webp/download
 
 
-static void FreeImageData(void *info, const void *data, size_t size)
-{
-	free((void *)data);
-}
-
 UIImage* _Nullable webpConv(NSData* _Nonnull data){
+    WebPData wdata;
+    wdata.bytes = data.bytes;
+    wdata.size = data.length;
+    WebPDemuxer *demux = WebPDemux(&wdata);
     
-
+    WebPIterator iter;
+    WebPDemuxGetFrame(demux, 1, &iter);
     WebPDecoderConfig config;
-	if (!WebPInitDecoderConfig(&config)) {
-		return nil;
-	}
-	
-	if (WebPGetFeatures(data.bytes, data.length, &config.input) != VP8_STATUS_OK) {
-		return nil;
-	}
-	
-	config.output.colorspace = config.input.has_alpha ? MODE_rgbA : MODE_RGB;
-	config.options.use_threads = 1;
-	
-	// Decode the WebP image data into a RGBA value array.
-	if (WebPDecode(data.bytes, data.length, &config) != VP8_STATUS_OK) {
-		return nil;
-	}
-	
-	int width = config.input.width;
-	int height = config.input.height;
-	if (config.options.use_scaling) {
-		width = config.options.scaled_width;
-		height = config.options.scaled_height;
-	}
-	
-	// Construct a UIImage from the decoded RGBA value array.
-	CGDataProviderRef provider =
-	CGDataProviderCreateWithData(NULL, config.output.u.RGBA.rgba, config.output.u.RGBA.size, FreeImageData);
-	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-	CGBitmapInfo bitmapInfo = config.input.has_alpha ? kCGBitmapByteOrder32Big | kCGImageAlphaPremultipliedLast : 0;
-	size_t components = config.input.has_alpha ? 4 : 3;
-	CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
-	CGImageRef imageRef = CGImageCreate(width, height, 8, components * 8, components * width, colorSpaceRef, bitmapInfo, provider, NULL, NO, renderingIntent);
-	
-	CGColorSpaceRelease(colorSpaceRef);
-	CGDataProviderRelease(provider);
-	
-	UIImage *image = [[UIImage alloc] initWithCGImage:imageRef];
-	CGImageRelease(imageRef);
-	
+    WebPInitDecoderConfig(&config);
 
-//	UIImage *image = [[UIImage alloc] init];
-	return image;
+    config.input.width = iter.width;
+    config.input.height = iter.height;
+    config.input.has_alpha = iter.has_alpha;
+    config.input.has_animation = 1;
+    config.options.no_fancy_upsampling = 1;
+    config.options.bypass_filtering = 1;
+    config.options.use_threads = 1;
+    config.output.colorspace = MODE_RGBA;
+
+    NSMutableArray<UIImage*> *images = [NSMutableArray array];
+    double duration = 0;
+
+    do {
+        WebPData frame = iter.fragment;
+        int width = iter.width;
+        int height = iter.height;
+        
+        VP8StatusCode status = WebPDecode(frame.bytes, frame.size, &config);
+        if (status != VP8_STATUS_OK) { break; }
+
+        uint8_t *ddata = WebPDecodeRGBA(frame.bytes, frame.size, &width, &height);
+        CGDataProviderRef provider = CGDataProviderCreateWithData(&config, ddata, width * height * 4, NULL);
+
+        CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+        CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+        CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaLast;
+
+        CGImageRef imageRef = CGImageCreate(width, height, 8, 32, width * 4, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);
+        UIImage *image = [UIImage imageWithCGImage:imageRef];
+        [images addObject:image];
+        duration +=  (double)iter.duration / 1000.0;
+
+        CGImageRelease(imageRef);
+        CGColorSpaceRelease(colorSpaceRef);
+        CGDataProviderRelease(provider);
+    } while (WebPDemuxNextFrame(&iter));
+
+    WebPDemuxDelete(demux);
+
+    if(images.count == 0) { return [UIImage new];}
+    if(images.count == 1) { return [images firstObject];}
+    if(duration == 0) { duration = (double)images.count * 0.1;}
+    return [UIImage animatedImageWithImages:images duration:duration];
 }
