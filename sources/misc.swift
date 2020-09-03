@@ -97,18 +97,8 @@ extension Date {
 }
 
 struct Path {
-	static var documtnts: String { return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] }
 	static var caches: String { return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] }
-	static var library: String { return NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0] }
-	static var support: String { return NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)[0] }
-	static var temp: String { return NSTemporaryDirectory() }
-	static var resource: String { return Bundle.main.resourcePath ?? "" }
-
-	static func documtnts(_ path: String) -> String { return Path.documtnts.appendPath(path) }
 	static func caches(_ path: String) -> String { return Path.caches.appendPath(path) }
-	static func library(_ path: String) -> String { return Path.library.appendPath(path) }
-	static func support(_ path: String) -> String { return Path.support.appendPath(path) }
-	static func resource(_ path: String) -> String { return Path.resource.appendPath(path) }
 
 	@discardableResult static func remove(_ path: String) -> Bool {
 		do {

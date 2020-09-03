@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "EzImageLoader"
-s.version      = "3.5.0"
+s.version      = "3.5.1"
 s.summary      = "image loader"
 s.swift_version = "5.0"
 

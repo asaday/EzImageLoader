@@ -64,23 +64,22 @@ public extension UIImage {
 
 	static func isWebpFormat(_ data: Data) -> Bool {
 		if data.count < 16 { return false }
-		let riff: [UInt8] = [0x52, 0x49, 0x46, 0x46]
-		let webp: [UInt8] = [0x57, 0x45, 0x42, 0x50]
-		return (memcmp((data as NSData).bytes, riff, 4) == 0 && memcmp((data as NSData).bytes + 8, webp, 4) == 0)
+		let riff = Data([0x52, 0x49, 0x46, 0x46])
+		let webp = Data([0x57, 0x45, 0x42, 0x50])
+		return data.subdata(in: 0 ..< 4) == riff && data.subdata(in: 8 ..< 12) == webp
 	}
 
 	static func isGIFFormat(_ data: Data) -> Bool {
 		if data.count < 4 { return false }
-		let gif: [UInt8] = [0x47, 0x49, 0x46]
-		return (memcmp((data as NSData).bytes, gif, 3) == 0)
+		let gif = Data([0x47, 0x49, 0x46])
+		return data.subdata(in: 0 ..< 3) == gif
 	}
 
 	static func isAPNGFormat(_ data: Data) -> Bool {
 		if data.count < 64 { return false }
-		let pngHeader: [UInt8] = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]
-		let actlHeader: [UInt8] = [0x00, 0x00, 0x00, 0x08, 0x61, 0x63, 0x54, 0x4C] // acTL from 33 = 8(PNG)+25(IHDR)
-		let ptr = (data as NSData).bytes
-		return (memcmp(ptr, pngHeader, pngHeader.count) == 0) && (memcmp(ptr + 33, actlHeader, actlHeader.count) == 0)
+		let pngHeader = Data([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A])
+		let actlHeader = Data([0x00, 0x00, 0x00, 0x08, 0x61, 0x63, 0x54, 0x4C]) // acTL from 33 = 8(PNG)+25(IHDR)
+		return data.subdata(in: 0 ..< 8) == pngHeader && data.subdata(in: 33 ..< 41) == actlHeader
 	}
 
 	static func imageWithGIF(data: Data) -> UIImage? {
@@ -95,7 +94,8 @@ public extension UIImage {
 			images.append(UIImage(cgImage: ref))
 
 			if let properties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? [AnyHashable: Any],
-				let gp = properties[kCGImagePropertyGIFDictionary] as? [AnyHashable: Any] {
+				let gp = properties[kCGImagePropertyGIFDictionary] as? [AnyHashable: Any]
+			{
 				if let p = gp[kCGImagePropertyGIFUnclampedDelayTime] as? NSNumber {
 					duration += p.doubleValue
 				} else if let p = gp[kCGImagePropertyGIFDelayTime] as? NSNumber {
@@ -109,7 +109,8 @@ public extension UIImage {
 		if duration == 0 {
 			if let properties = CGImageSourceCopyProperties(source, nil) as? [AnyHashable: Any],
 				let gp = properties[kCGImagePropertyGIFDictionary] as? [AnyHashable: Any],
-				let p = gp[kCGImagePropertyGIFDelayTime] as? NSNumber {
+				let p = gp[kCGImagePropertyGIFDelayTime] as? NSNumber
+			{
 				duration = p.doubleValue
 			}
 		}
@@ -136,7 +137,8 @@ public extension UIImage {
 		if let properties = CGImageSourceCopyProperties(source, nil) as? [AnyHashable: Any],
 			let gp = properties[kCGImagePropertyPNGDictionary as String] as? [AnyHashable: Any],
 			let dt = gp[kCGImagePropertyAPNGDelayTime as String] as? String,
-			let d = Double(dt) { // may be not
+			let d = Double(dt)
+		{ // may be not
 			return UIImage.animatedImage(with: images, duration: d)
 		}
 
