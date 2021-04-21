@@ -13,36 +13,28 @@ EzImageLoader is easy-to-use library for lading Images over HTTP/HTTPS. EzImageL
 
 ## Requirements
 
-- iOS 8.0+
-- Xcode 8+ for Swift 3 and EzImageLoader v3.x
-
-If you use Swift 2.x, use EzImageLoader v0.0.x.
+- iOS 9.0+
+- Xcode 11+
 
 ## Installation
 
 ### CocoaPods
-Add EzImageLoader to the dependencies in your Podfile.
 
+Add EzImageLoader to the dependencies in your Podfile.
 
 ```
 pod 'EzImageLoader'
 ```
 
-
 Sample Podfile is [here](https://github.com/asaday/EzImageLoader/blob/master/exsample/Podfile).
 
+### Swift Package Manager
 
+You can also install EzImageLoader using Swift Package Xcode11 later
 
+File->Swift Packages->Add Package Dependency...
 
-### Carthage
-You can also install EzImageLoader with Carthage. Add this line in your Cartfile.
-
-
-```
-github "asaday/EzImageLoader"
-```
-
-
+    https://github.com/asaday/EzImageLoader.git
 
 ## Usage
 
@@ -58,7 +50,7 @@ In addition, import [EzHTTP](https://github.com/asaday/EzHTTP) for creating URLR
 import EzHTTP
 ```
 
-### Basic 
+### Basic
 
 #### GET
 
@@ -76,10 +68,9 @@ let mSize = CGSize(width: 200, height: 200)
 ImageLoader.get(urlStr, size: mSize) {iv.image = $0.image}
 ```
 
-
 #### URLRequest
 
-Get an image with NSURLRequest.  Note that "HTTP.createRequest()" creates URLRequest with EzHTTP.
+Get an image with NSURLRequest. Note that "HTTP.createRequest()" creates URLRequest with EzHTTP.
 
 ```
 let iv = UIImageView(frame: view.bounds)
@@ -96,13 +87,12 @@ ImageLoader.request(req!, size:mSize) {iv.image = $0.image}
 
 #### Result
 
-You can get some information about a request. ResultReason is enumeration type and gives status of the result. 
+You can get some information about a request. ResultReason is enumeration type and gives status of the result.
 
 - `$0.image` UIImage?
 - `$0.reason` enum ResultReason
 - `$0.decodeTime` TimeInterval
 - `$0.downloadTime` TimeInterval
-
 
 ```
 let iv = UIImageView(frame: view.bounds)
@@ -131,7 +121,6 @@ let img2:UIImage? = ImageLoader.getASync("https://httpbin.org/image/png")
 let img3:UIImage? = ImageLoader.getASync(urlStr, headers: ["Custom-Content":":D"])
 ```
 
-
 ### UIImageView Extension
 
 EzImageLoader extends UIImageView. It's very simple to use.
@@ -159,7 +148,6 @@ iv.loadRequest(req!)
 let ilFilter = ImageLoader.Filter.resizer(CGSize(width: 280, height: 280))
 iv.loadRequest(req!, filter: ilFilter)
 ```
-
 
 ### UIImage Extension
 

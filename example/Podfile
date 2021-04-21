@@ -1,6 +1,6 @@
 
-platform :ios, '8.0'
-#use_frameworks!
+platform :ios, '9.0'
+use_frameworks!
 
 target 'EzImageLoaderSample' do
   pod 'EzHTTP'
